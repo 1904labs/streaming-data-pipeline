@@ -23,6 +23,8 @@ object StreamingPipeline {
         .format("kafka")
         .option("kafka.bootstrap.servers", bootstrapServers)
         .option("subscribe", "reviews")
+        .option("startingOffsets", "earliest")
+        .option("maxOffsetsPerTrigger", "20")
         .load()
         .selectExpr("CAST(value AS STRING)")
 
