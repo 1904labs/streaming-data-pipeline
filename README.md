@@ -27,6 +27,7 @@ This project will have you
 4. Use the userId to lookup the corresponding user data in HBase.
 5. Join the review data with the user data.
 6. Save this combined result in hdfs
+7. Setup a Hive Table that points to the enriched result stored in HDFS
 
 ### Slides Accompanying the instructions
 
@@ -49,7 +50,7 @@ Tip:
 Open up a connection per partition, instead of per row:
 Link to google slide here.
 
-### Join the review data with teh user data into a Scala case class.
+### Join the review data with the user data into a Scala case class.
 
 Verify the joined output using the console sink provided.
 
@@ -57,6 +58,8 @@ Verify the joined output using the console sink provided.
 
 Open up `StreamingPipeline.scala` from src/main/scala/com/labs1904/spark.
 
+### Setup a Hive table that points to the enriched result stored in hdfs.
+Run a query to verify that the data is successfully stored ( e.g. select all user names who gave reviews a rating of 4 or greater )
 ### Stretch: Filter out junk data.
 
 A separate topic exists called reviews-and-junk, which mostly contains reviews in the same format as above. However, it
