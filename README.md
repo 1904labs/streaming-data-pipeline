@@ -1,7 +1,9 @@
 # Hours with Experts - Streaming Data Pipeline
 
-A spark-streaming application that ingests data from Kafka, supplements with data stored in HBase, and saves the
-enriched output to HDFS. Done as part of the Hours with Experts course.
+A [Spark streaming](https://spark.apache.org/docs/latest/) application that ingests data
+from [Kafka](https://kafka.apache.org/), supplements with data stored in [HBase](https://hbase.apache.org/book.html),
+and saves the enriched output to [HDFS](https://hadoop.apache.org/docs/r1.2.1/hdfs_design.html). Done as part of
+the [Hours with Experts](https://1904labs.com/our-culture/community/hours-with-experts/) course by 1904Labs
 
 # Getting Started
 
@@ -27,6 +29,7 @@ This project will have you
 4. Use the userId to lookup the corresponding user data in HBase.
 5. Join the review data with the user data.
 6. Save this combined result in hdfs
+7. Setup a Hive Table that points to the enriched result stored in HDFS
 
 ### Slides Accompanying the instructions
 
@@ -34,28 +37,33 @@ This project will have you
 
 ### Ingest data from a "reviews" Kafka topic.
 
-Adjust the Spark application to read from the "reviews topic". Make sure to change the bootstrap server URL to the 1904
+Adjust the Spark application to read from the "reviews" topic. Make sure to change the bootstrap server URL to the 1904
 provided cluster. Verify the output using the console sink provided.
 
 ### Parse each message from the "reviews" topic into a Scala case class.
 
 A small sample of messages can be found here.
 
-### Use the userId from the review message to lookup
+### Use the customer_id contained within the review message to lookup corresponding user data in HBase.
 
-HBase get example.
+The customer_id corresponds to the rowkey in HBase.
 
-Tip:
-Open up a connection per partition, instead of per row:
-Link to google slide here.
+**Tip**:
+[Open up a connection per partition, instead of per row](https://docs.google.com/presentation/d/1VYreCRMDD3F6a9Xn2pP13mYxUZN8TL4wZHpxSQaysz0/edit#slide=id.gcd61ac9710_0_10)
 
-### Join the review data with teh user data into a Scala case class.
+### Join the review data with the user data into a Scala case class.
 
-Verify the joined output using the console sink provided.
+Create a new case class that holds information for the review data and its corresponding user data. Verify your joined
+data by running the application and outputting via the console sink.
 
 ### Save this combined result in hdfs.
 
-Open up `StreamingPipeline.scala` from src/main/scala/com/labs1904/spark.
+[Make sure to set your correct config options](https://docs.google.com/presentation/d/1VYreCRMDD3F6a9Xn2pP13mYxUZN8TL4wZHpxSQaysz0/edit#slide=id.gcd61ac9710_0_31)
+
+### Setup a Hive table that points to the enriched result stored in hdfs.
+
+Run a query to verify that the data is successfully stored ( e.g. select all user names who gave reviews a rating of 4
+or greater )
 
 ### Stretch: Filter out junk data.
 
