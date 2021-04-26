@@ -42,8 +42,8 @@ provided cluster. Verify the output using the console sink provided.
 
 ### Parse each message from the "reviews" topic into a Scala case class.
 
-[Scala case class](https://docs.google.com/presentation/d/1cdcJQFleLNBTCyjc-Ah9pdUM2cAp3NcedRinknjdUjo/edit#slide=id.gca151140f3_0_139)
-A [sample](src/main/resources/reviews.csv) of reviews, with column names, is located within the resources directory.
+- [Scala case class](https://docs.google.com/presentation/d/1cdcJQFleLNBTCyjc-Ah9pdUM2cAp3NcedRinknjdUjo/edit#slide=id.gca151140f3_0_139)
+- A [sample](src/main/resources/reviews.csv) of reviews, with column names, is located within the resources directory.
 
 ```
 marketplace,customer_id,review_id,product_id,product_parent,product_title,product_category,star_rating,helpful_votes,total_votes,vine,verified_purchase,review_headline,review_body,review_date
@@ -54,7 +54,9 @@ US,44331596,R1UE3RPRGCOLD,B002LHA74O,818126353,Super Jumbo Playing Cards by S&S 
 
 ### Use the customer_id contained within the review message to lookup corresponding user data in HBase.
 
-The customer_id corresponds to the rowkey in HBase.
+Construct
+an [HBase get request](https://docs.google.com/presentation/d/1wPMeesO5DvceGm0BXhgaxFq6DUbtKPkg600lqHnlar0/edit#slide=id.gd2e67ee890_2_6)
+for every review message. The customer_id corresponds to a HBase rowkey.
 
 **Tip**:
 [Open up a connection per partition, instead of per row](https://docs.google.com/presentation/d/1VYreCRMDD3F6a9Xn2pP13mYxUZN8TL4wZHpxSQaysz0/edit#slide=id.gcd61ac9710_0_10)
@@ -77,11 +79,10 @@ Adjust the write stream configuration to write to hdfs rather than outputting to
 
 ### Stretch: Filter out junk data.
 
-A separate topic exists called reviews-and-junk, which mostly contains reviews in the same format as above. However, it
-also contains junk data. Change your application to consume from this reviews-and-junk. Filter out junk messages so that
-they don't break your data pipeline.
+A separate topic exists called reviews-and-junk, which mostly contains reviews in the same format as above as well as
+junk data. While consuming from this new topic, filter out junk messages they don't break your data pipeline.
 
-Tip:
+**Tip**:
 
 - Connecting a Kafka console consumer to the reviews-and-junk topic can help to see what junk data is giving your
   application trouble.
