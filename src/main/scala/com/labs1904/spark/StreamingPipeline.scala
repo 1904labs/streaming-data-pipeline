@@ -22,7 +22,7 @@ object StreamingPipeline {
         .readStream
         .format("kafka")
         .option("kafka.bootstrap.servers", bootstrapServers)
-        .option("subscribe", "reviews")
+        .option("subscribe", "change-me")
         .option("startingOffsets", "earliest")
         .option("maxOffsetsPerTrigger", "20")
         .load()
