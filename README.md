@@ -5,7 +5,7 @@ from [Kafka](https://kafka.apache.org/), supplements with data stored in [HBase]
 and saves the enriched output to [HDFS](https://hadoop.apache.org/docs/r1.2.1/hdfs_design.html). Done as part of
 the [Hours with Experts](https://1904labs.com/our-culture/community/hours-with-experts/) course by 1904Labs
 
-# Getting Started
+## Getting Started
 
 To start, clone this repo to your computer:
 
