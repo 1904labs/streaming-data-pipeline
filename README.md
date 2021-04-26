@@ -41,8 +41,8 @@ Adjust the Spark application to read from the "reviews" topic. Make sure to chan
 provided cluster. Verify the output using the console sink provided.
 
 ### Parse each message from the "reviews" topic into a Scala case class.
-
-A small sample of messages can be found here.
+[Scala case class](https://docs.google.com/presentation/d/1cdcJQFleLNBTCyjc-Ah9pdUM2cAp3NcedRinknjdUjo/edit#slide=id.gca151140f3_0_139)
+A [sample](src/main/resources/reviews.csv) of reviews is located within the resources directory
 
 ### Use the customer_id contained within the review message to lookup corresponding user data in HBase.
 
@@ -58,17 +58,23 @@ data by running the application and outputting via the console sink.
 
 ### Save this combined result in hdfs.
 
-[Make sure to set your correct config options](https://docs.google.com/presentation/d/1VYreCRMDD3F6a9Xn2pP13mYxUZN8TL4wZHpxSQaysz0/edit#slide=id.gcd61ac9710_0_31)
+Adjust the write stream configuration to write to hdfs rather than outputting to the console.
+[Example and config options ](https://docs.google.com/presentation/d/1VYreCRMDD3F6a9Xn2pP13mYxUZN8TL4wZHpxSQaysz0/edit#slide=id.gcd61ac9710_0_31)
 
 ### Setup a Hive table that points to the enriched result stored in hdfs.
 
-Run a query to verify that the data is successfully stored ( e.g. select all user names who gave reviews a rating of 4
-or greater )
+- [Create an external table](https://docs.google.com/presentation/d/1vstFy3dXS0tV88yYntIsvfVg8J0mvdCe9DJ3yIRb4c4/edit#slide=id.g829663288b_0_318)
+- Write and run a query to verify that the data is successfully stored ( e.g. select all usernames who gave reviews a
+  rating of 4 or greater )
 
 ### Stretch: Filter out junk data.
 
 A separate topic exists called reviews-and-junk, which mostly contains reviews in the same format as above. However, it
 also contains junk data. Change your application to consume from this reviews-and-junk. Filter out junk messages so that
-they don't break your data pipeline. Tip:
-Connecting a Kafka console consumer to the reviews-and-junk topic can help to see what junk data is giving your
-application trouble.
+they don't break your data pipeline.
+
+Tip:
+
+- Connecting a Kafka console consumer to the reviews-and-junk topic can help to see what junk data is giving your
+  application trouble.
+  
