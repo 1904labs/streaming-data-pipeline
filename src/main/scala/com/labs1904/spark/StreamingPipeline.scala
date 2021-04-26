@@ -18,7 +18,9 @@ object StreamingPipeline {
       // TODO: change bootstrap servers to your kafka brokers
       val bootstrapServers = "localhost:9092"
 
-      val df = spark
+      import spark.implicits._
+
+      val ds = spark
         .readStream
         .format("kafka")
         .option("kafka.bootstrap.servers", bootstrapServers)
@@ -26,11 +28,11 @@ object StreamingPipeline {
         .option("startingOffsets", "earliest")
         .option("maxOffsetsPerTrigger", "20")
         .load()
-        .selectExpr("CAST(value AS STRING)")
+        .selectExpr("CAST(value AS STRING)").as[String]
 
-      df.printSchema()
+      ds.printSchema()
 
-      val query = df.writeStream
+      val query = ds.writeStream
         .outputMode(OutputMode.Append())
         .format("console")
         .trigger(Trigger.ProcessingTime("5 seconds"))
