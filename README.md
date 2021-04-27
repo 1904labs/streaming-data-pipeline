@@ -41,7 +41,7 @@ provided cluster. Verify the output using the console sink provided.
 
 ### Parse each message from the "reviews" topic into a Scala case class.
 
-- [Scala case class](https://docs.google.com/presentation/d/1cdcJQFleLNBTCyjc-Ah9pdUM2cAp3NcedRinknjdUjo/edit#slide=id.gca151140f3_0_139)
+- In the StreamingPipeline.scala file, define a [Scala case class](https://docs.google.com/presentation/d/1cdcJQFleLNBTCyjc-Ah9pdUM2cAp3NcedRinknjdUjo/edit#slide=id.gca151140f3_0_139)above the object definition. 
 - A [sample](src/main/resources/reviews.csv) of reviews, with column names, is located within the resources directory.
 
 ```
