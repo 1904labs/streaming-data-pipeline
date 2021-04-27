@@ -35,6 +35,7 @@ object StreamingPipeline {
       val query = ds.writeStream
         .outputMode(OutputMode.Append())
         .format("console")
+        .option("truncate", false)
         .trigger(Trigger.ProcessingTime("5 seconds"))
         .start()
 
