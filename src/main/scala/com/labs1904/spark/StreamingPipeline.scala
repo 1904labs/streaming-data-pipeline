@@ -27,19 +27,21 @@ object StreamingPipeline {
       val spark = SparkSession.builder().config("spark.hadoop.dfs.client.use.datanode.hostname", "true").config("spark.hadoop.fs.defaultFS", "hdfs://manager.hourswith.expert:8020").appName(jobName).master("local[*]").getOrCreate()
       import spark.implicits._
 
-      val df = spark
+      import spark.implicits._
+
+      val ds = spark
         .readStream
         .format("kafka")
         .option("kafka.bootstrap.servers", bootstrapServers)
-        .option("subscribe", "reviews")
+        .option("subscribe", "change-me")
         .option("startingOffsets", "earliest")
         .option("maxOffsetsPerTrigger", "5")
         .load()
         .selectExpr("CAST(value AS STRING)").as[String]
 
-      df.printSchema()
+      ds.printSchema()
 
-      val reviews = df.map(csvLine => {
+      val reviews = ds.map(csvLine => {
         val csvArray = csvLine.split(",")
         Review(
           csvArray(0),
