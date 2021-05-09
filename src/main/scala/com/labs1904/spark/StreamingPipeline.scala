@@ -73,7 +73,7 @@ object StreamingPipeline {
         val connection = ConnectionFactory.createConnection(conf)
 
         val table = connection.getTable(TableName.valueOf("shared:users"))
-        
+
         val iterator = p.map(r => {
           val get = new Get(r.customer_id).addFamily("f1")
           val result = table.get(get)
@@ -91,11 +91,18 @@ object StreamingPipeline {
         iterator.iterator
       })
 
+      /*
+      // WriteStream Questions:
+      // What file formats did you save as?
+      // Did anyone partition their data?
+         What is the benefit of partitioning your data?
+      */
+
       val query = enriched.writeStream
         .outputMode(OutputMode.Append())
         .format("json")
-        .option("path", "/user/wfarrell/reviewss")
-        .option("checkpointLocation", "/user/wfarrell/reviewss_checkpoint")
+        .option("path", "/user/wfarrell/reviews")
+        .option("checkpointLocation", "/user/wfarrell/reviews_checkpoint")
         .trigger(Trigger.ProcessingTime("5 seconds"))
         .start()
 
@@ -105,3 +112,14 @@ object StreamingPipeline {
     }
   }
 }
+
+// Add in partitionBy
+
+//val query = enriched.writeStream
+//.outputMode(OutputMode.Append())
+//.format("parquet")
+//.option("path", "/user/wfarrell/reviews-partitioned")
+//.option("checkpointLocation", "/user/wfarrell/reviews-partitioned-checkpoint")
+//.trigger(Trigger.ProcessingTime("5 seconds"))
+//.start()
+
