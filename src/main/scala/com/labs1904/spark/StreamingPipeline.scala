@@ -5,7 +5,7 @@ import org.apache.hadoop.hbase.client.{ConnectionFactory, Get}
 import org.apache.hadoop.hbase.util.Bytes
 import org.apache.log4j.Logger
 import org.apache.spark.sql.streaming.{OutputMode, Trigger}
-import org.apache.spark.sql.{SparkSession}
+import org.apache.spark.sql.SparkSession
 
 /**
  * Spark Structured Streaming app
@@ -24,8 +24,12 @@ object StreamingPipeline {
 
   def main(args: Array[String]): Unit = {
     try {
-      val spark = SparkSession.builder().config("spark.hadoop.dfs.client.use.datanode.hostname", "true").config("spark.hadoop.fs.defaultFS", "hdfs://manager.hourswith.expert:8020").appName(jobName).master("local[*]").getOrCreate()
-      import spark.implicits._
+      val spark = SparkSession.builder()
+        .config("spark.hadoop.dfs.client.use.datanode.hostname", "true")
+        .config("spark.hadoop.fs.defaultFS", "hdfs://manager.hourswith.expert:8020")
+        .appName(jobName)
+        .master("local[*]")
+        .getOrCreate()
 
       import spark.implicits._
 
@@ -33,16 +37,16 @@ object StreamingPipeline {
         .readStream
         .format("kafka")
         .option("kafka.bootstrap.servers", bootstrapServers)
-        .option("subscribe", "change-me")
+        .option("subscribe", "reviews-as-tabs")
         .option("startingOffsets", "earliest")
-        .option("maxOffsetsPerTrigger", "5")
+        .option("maxOffsetsPerTrigger", "100")
         .load()
         .selectExpr("CAST(value AS STRING)").as[String]
 
       ds.printSchema()
 
       val reviews = ds.map(csvLine => {
-        val csvArray = csvLine.split(",")
+        val csvArray = csvLine.split("\t")
         Review(
           csvArray(0),
           csvArray(1),
@@ -68,7 +72,8 @@ object StreamingPipeline {
         conf.set("hbase.zookeeper.quorum", "cdh01.hourswith.expert:2181,cdh02.hourswith.expert:2181,cdh03.hourswith.expert:2181")
         val connection = ConnectionFactory.createConnection(conf)
 
-        val table = connection.getTable(TableName.valueOf("wfarrell:users"))
+        val table = connection.getTable(TableName.valueOf("shared:users"))
+        
         val iterator = p.map(r => {
           val get = new Get(r.customer_id).addFamily("f1")
           val result = table.get(get)
@@ -89,8 +94,8 @@ object StreamingPipeline {
       val query = enriched.writeStream
         .outputMode(OutputMode.Append())
         .format("json")
-        .option("path", "hdfs://manager.hourswith.expert:8020/user/wfarrell/reviews")
-        .option("checkpointLocation", "hdfs://manager.hourswith.expert:8020/user/wfarrell/reviews_checkpoint")
+        .option("path", "/user/wfarrell/reviewss")
+        .option("checkpointLocation", "/user/wfarrell/reviewss_checkpoint")
         .trigger(Trigger.ProcessingTime("5 seconds"))
         .start()
 

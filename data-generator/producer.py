@@ -37,12 +37,12 @@ count = 0
 for tsv_row in read_tsv:
     if count > 1:
         print(tsv_row)
-        csv_row = ",".join(tsv_row)
+        csv_row = "\t".join(tsv_row)
         print(csv_row)
         data = csv_row.encode('utf-8')
-        producer.send('reviews', key=None, value=data).add_callback(on_send_success).add_errback(on_send_error)
+        producer.send('reviews-as-tabs', key=None, value=data).add_callback(on_send_success).add_errback(on_send_error)
     count += 1
-    if count > 1000000 :
+    if count > 10 :
         break
 
 # block until all async messages are sent

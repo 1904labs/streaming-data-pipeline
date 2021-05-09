@@ -39,5 +39,13 @@ case class EnrichedReview(marketplace: String,
                           mail: String,
                           sex: String,
                           username: String
-
                          )
+
+case class User(name: String,
+                birthdate: String,
+                mail: String,
+                sex: String,
+                username: String
+               )
+
+case class EnrichedReviewNested(review: Review, user: User)
