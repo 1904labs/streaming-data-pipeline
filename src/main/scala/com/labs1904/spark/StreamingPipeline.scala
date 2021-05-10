@@ -5,7 +5,7 @@ import org.apache.hadoop.hbase.client.{ConnectionFactory, Get}
 import org.apache.hadoop.hbase.util.Bytes
 import org.apache.log4j.Logger
 import org.apache.spark.sql.streaming.{OutputMode, Trigger}
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{Dataset, SparkSession}
 
 /**
  * Spark Structured Streaming app
@@ -45,6 +45,7 @@ object StreamingPipeline {
 
       ds.printSchema()
 
+      // Transform from a tsv into a Review case class.
       val reviews = ds.map(csvLine => {
         val csvArray = csvLine.split("\t")
         Review(
@@ -66,6 +67,8 @@ object StreamingPipeline {
         )
       })
 
+      // Combine the review data with the user data.
+      //
       val enriched = reviews.mapPartitions(p => {
         // Open Hbase Connection
         val conf = HBaseConfiguration.create()
@@ -95,12 +98,12 @@ object StreamingPipeline {
       // WriteStream Questions:
       // What file formats did you save as?
       // Did anyone partition their data?
-         What is the benefit of partitioning your data?
+      // What is the benefit of partitioning your data?
       */
-
       val query = enriched.writeStream
         .outputMode(OutputMode.Append())
         .format("json")
+        .partitionBy("star_rating")
         .option("path", "/user/wfarrell/reviews")
         .option("checkpointLocation", "/user/wfarrell/reviews_checkpoint")
         .trigger(Trigger.ProcessingTime("5 seconds"))
