@@ -24,7 +24,7 @@ loading.
 This project will have you
 
 1. Ingest data from a "reviews" Kafka topic.
-2. Parse the comma separated values into a Review scala case class
+2. Parse the values into a Review scala case class
 3. Use the customer id to lookup the corresponding user data in HBase.
 4. Join the review data with the user data.
 5. Save this combined result in hdfs
@@ -41,14 +41,14 @@ provided cluster. Verify the output using the console sink provided.
 
 ### Parse each message from the "reviews" topic into a Scala case class.
 
-- In the StreamingPipeline.scala file, define a [Scala case class](https://docs.google.com/presentation/d/1cdcJQFleLNBTCyjc-Ah9pdUM2cAp3NcedRinknjdUjo/edit#slide=id.gca151140f3_0_139)above the object definition. 
-- A [sample](src/main/resources/reviews.csv) of reviews, with column names, is located within the resources directory.
+- In the StreamingPipeline.scala file, define a [Scala case class](https://docs.google.com/presentation/d/1cdcJQFleLNBTCyjc-Ah9pdUM2cAp3NcedRinknjdUjo/edit#slide=id.gca151140f3_0_139) above the object definition. 
+- A [sample](src/main/resources/reviews.tsv) of reviews, with column names, is located within the resources directory.
 
 ```
-marketplace,customer_id,review_id,product_id,product_parent,product_title,product_category,star_rating,helpful_votes,total_votes,vine,verified_purchase,review_headline,review_body,review_date
-US,18778586,RDIJS7QYB6XNR,B00EDBY7X8,122952789,Monopoly Junior Board Game,Toys,5,0,0,N,Y,Five Stars,Excellent!!!,2015-08-31
-US,24769659,R36ED1U38IELG8,B00D7JFOPC,952062646,56 Pieces of Wooden Train Track Compatible with All Major Train Brands,Toys,5,Good quality track at excellent price,Great quality wooden track (better than some others we have tried). Perfect match to the various vintages of Thomas track that we already have. There is enough track here to have fun and get creative incorporating your key pieces with track splits, loops and bends.,2015-08-31
-US,44331596,R1UE3RPRGCOLD,B002LHA74O,818126353,Super Jumbo Playing Cards by S&S Worldwide,Toys,2,1,1,N,Two Stars,Cards are not as big as pictured.,2015-08-31
+marketplace	customer_id	review_id	product_id	product_parent	product_title	product_category	star_rating	helpful_votes	total_votes	vine	verified_purchase	review_headline	review_body	review_date
+US	18778586	RDIJS7QYB6XNR	B00EDBY7X8	122952789	Monopoly Junior Board Game	Toys	5	0	0	N	Y	Five Stars	Excellent!!!	2015-08-31
+US	24769659	R36ED1U38IELG8	B00D7JFOPC	952062646	56 Pieces of Wooden Train Track Compatible with All Major Train Brands	Toys	5	0	0	N	Y	Good quality track at excellent price	Great quality wooden track (better than some others we have tried). Perfect match to the various vintages of Thomas track that we already have. There is enough track here to have fun and get creative incorporating your key pieces with track splits, loops and bends.	2015-08-31
+US	44331596	R1UE3RPRGCOLD	B002LHA74O	818126353	Super Jumbo Playing Cards by S&S Worldwide	Toys	2	1	1	N	Y	Two Stars	Cards are not as big as pictured.	2015-08-31
 ```
 
 ### Use the customer_id contained within the review message to lookup corresponding user data in HBase.
