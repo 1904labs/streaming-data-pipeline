@@ -10,10 +10,12 @@ To start, clone this repo to your computer:
 git clone https://github.com/1904labs/streaming-data-pipeline.git
 ```
 
+TODO: Full instructions on http://hourswith.expert/
+
 There are multiple projects inside this repository:
 
  - Scala practice project
  - Kafka practice project
- - HBase practice project
+ - [HBase practice project](./hbase-hello-world)
  - Spark practice project
- - Streaming data pipeline final project
+ - [Streaming data pipeline final project](./streaming-data-pipeline)
