@@ -1,4 +1,4 @@
-package com.farrellw.hwe.exercises
+package com.labs1904.hwe.exercises
 
 import org.scalatest.FunSpec
 

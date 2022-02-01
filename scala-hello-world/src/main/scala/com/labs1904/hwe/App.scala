@@ -1,4 +1,4 @@
-package com.farrellw.hwe
+package com.labs1904.hwe
 
 object App {
   def main(args: Array[String]): Unit = {
