@@ -14,7 +14,7 @@ TODO: Full instructions on http://hourswith.expert/
 
 There are multiple projects inside this repository:
 
- - Scala practice project
+ - [Scala practice project](./scala-hello-world)
  - Kafka practice project
  - [HBase practice project](./hbase-hello-world)
  - Spark practice project

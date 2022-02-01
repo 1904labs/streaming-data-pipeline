@@ -1,4 +1,4 @@
-package com.kitmenke.hbase
+package com.labs1904.hwe
 
 import org.apache.hadoop.hbase.{HBaseConfiguration, TableName}
 import org.apache.hadoop.hbase.client.{Connection, ConnectionFactory, Get}
