@@ -9,7 +9,7 @@
         <Root level="error">
             <AppenderRef ref="Console"/>
         </Root>
-        <Logger name="com.kitmenke.hbase" level="debug" additivity="false">
+        <Logger name="com.labs1904.hwe" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
     </Loggers>
