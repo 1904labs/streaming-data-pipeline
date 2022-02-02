@@ -5,44 +5,28 @@ An example Spark application written in Scala and setup using Maven.
 
 ## Challenge 1: Run the Batch App
 
-Open up MyApp.scala from src/main/scala/com/kitmenke/spark.
+Open up `HelloWorldBatchApp.scala` from `src/main/scala/com/labs1904/hwe`. Right click on MyApp and choose "Run MyApp" 
+to run the Spark app locally. If all goes well, you should see output similar to the following in the console:
 
-Right click on MyApp and choose "Run MyApp" to run the Spark app locally. If all goes well, you should see the following output in the log:
 ```
-(to,3)
-(new,3)
-(the,3)
-(enterprise,1)
-(space,1)
-(are,1)
-(mission,1)
-(starship,1)
-(its,1)
-(civilizations,1)
-(gone,1)
-(one,1)
-(strange,1)
-(no,1)
-(before,1)
-(life,1)
-(voyages,1)
-(worlds,1)
-(of,1)
-(where,1)
-(seek,1)
-(go,1)
-(and,1)
-(out,1)
-(frontier,1)
-(final,1)
-(these,1)
-(has,1)
-(boldly,1)
-(explore,1)
-(continuing,1)
+2022-02-01 21:12:18 INFO  HelloWorldBatchApp$:12 - HelloWorldBatchApp starting...
+root
+ |-- _c0: string (nullable = true)
+
++-------------------------------------------------+
+|_c0                                              |
++-------------------------------------------------+
+|Space.                                           |
+|The final frontier.                              |
+|These are the voyages of the starship Enterprise.|
+|It's continuing mission:                         |
+|to explore strange new worlds                    |
+|to seek out new life and new civilizations       |
+|to boldly go where no one has gone before!       |
++-------------------------------------------------+
 ```
 
-Congratulations! You just ran a Spark application!
+If you don't, check out the Known Issues section below.
 
 ## Challenge 2: Run the Structured Streaming App
 
@@ -77,9 +61,39 @@ Open up MyStreamingApp.scala from src/main/scala/com/kitmenke/spark.
 
 You will need to specify the Kafka bootstrap servers as the first argument.
 
-
-
 # Known Issues
+
+## An illegal reflective access operation has occurred
+
+If you get the following warning, you are using the wrong JDK. You must use JDK version 8 (sometimes called 1.8).
+
+```
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by org.apache.spark.unsafe.Platform (file:/Users/Kit/.m2/repository/org/apache/spark/spark-unsafe_2.12/3.0.1/spark-unsafe_2.12-3.0.1.jar) to constructor java.nio.DirectByteBuffer(long,int)
+WARNING: Please consider reporting this to the maintainers of org.apache.spark.unsafe.Platform
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+```
+
+To change this in Intellij, go to File -> Project Structure. Make sure that the right JDK is selected, for example you
+may use `correcto-1.8` downloaded through Intellij.
+
+## Scary warnings
+
+You may get some scary warnings. You can ignore the following
+
+```
+2022-02-01 20:40:52 WARN  Utils:69 - Your hostname, 1904labss-MacBook-Pro.local resolves to a loopback address: 127.0.0.1; using 192.168.1.163 instead (on interface en0)
+2022-02-01 20:40:52 WARN  Utils:69 - Set SPARK_LOCAL_IP if you need to bind to another address
+```
+
+this too
+
+```
+2022-02-01 20:40:52 WARN  NativeCodeLoader:62 - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+```
+
+TODO: maybe fix here? https://stackoverflow.com/questions/19943766/hadoop-unable-to-load-native-hadoop-library-for-your-platform-warning
 
 ## MacOS can't assign requested address
 
