@@ -1,5 +1,26 @@
 # Kafka CLI
 
+## Set the bootstrap-server environment variable
+
+We store the list of hosts we use to connect to Kafka in 
+[environment variables](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html). All of the
+instructions below are commands you can use after [installing Kafka locally](https://kafka.apache.org/quickstart). The
+commands will also work with a remote cluster just by changing your `BOOTSTRAP_SERVERS` environment variable to the
+correct hosts.
+
+### Windows
+
+```
+SET BOOTSTRAP_SERVERS=localhost:9092
+```
+
+
+### Linux/Mac
+
+```
+export BOOTSTRAP_SERVER=localhost:9092
+```
+
 ## Kafka-Topics
 
 ### Create

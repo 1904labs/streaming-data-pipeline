@@ -14,8 +14,8 @@ TODO: Full instructions on http://hourswith.expert/
 
 There are multiple projects inside this repository:
 
- - [Scala practice project](./scala-hello-world)
- - Kafka practice project
- - [HBase practice project](./hbase-hello-world)
- - Spark practice project
- - [Streaming data pipeline final project](./streaming-data-pipeline)
+ 1. [Scala practice project](./scala-hello-world) -- start here
+ 2. [Kafka practice project](./kafka-hello-world)
+ 3. [HBase practice project](./hbase-hello-world)
+ 4. Spark practice project
+ 5. [Streaming data pipeline final project](./streaming-data-pipeline)
