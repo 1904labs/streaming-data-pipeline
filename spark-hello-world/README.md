@@ -5,8 +5,9 @@ An example Spark application written in Scala and setup using Maven.
 
 ## Challenge 1: Run the Batch App
 
-Open up `HelloWorldBatchApp.scala` from `src/main/scala/com/labs1904/hwe`. Right click on MyApp and choose "Run MyApp" 
-to run the Spark app locally. If all goes well, you should see output similar to the following in the console:
+Open up `HelloWorldBatchApp.scala` from `src/main/scala/com/labs1904/hwe`. Right click on HelloWorldBatchApp and choose 
+"Run MyApp" to run the Spark app locally. If all goes well, you should see output similar to the following in the 
+console:
 
 ```
 2022-02-01 21:12:18 INFO  HelloWorldBatchApp$:12 - HelloWorldBatchApp starting...
@@ -28,11 +29,25 @@ root
 
 If you don't, check out the Known Issues section below.
 
-## Challenge 2: Run the Structured Streaming App
+## Challenge 2: Implement Word Count in the Batch app
 
-TODO
+Open up `WordCountBatchApp.scala`. 
 
-## Challenge 3: Connect the Structured Streaming app to Kafka
+Make the app run.
+
+Implement the method named `splitSentenceIntoWords`.
+
+Use the method you implemented in your spark program.
+
+## Challenge 3: Run the Structured Streaming App
+
+Open up `HelloWorldStreamingApp.scala`. Run it just like you did the Batch App above.
+
+How often is data printed out?
+Where is the data coming from?
+Why do we run locally?
+
+## Challenge 4: Connect the Structured Streaming app to Kafka
 
 The structured streaming app requires a Kafka cluster. The data on the topic is from the [Amazon Customer Reviews Dataset](https://registry.opendata.aws/amazon-reviews/)
 and looks like the following example:
@@ -57,9 +72,7 @@ and looks like the following example:
 }
 ```
 
-Open up MyStreamingApp.scala from src/main/scala/com/kitmenke/spark.
-
-You will need to specify the Kafka bootstrap servers as the first argument.
+Open up WordCountStreamingApp.scala.
 
 # Known Issues
 

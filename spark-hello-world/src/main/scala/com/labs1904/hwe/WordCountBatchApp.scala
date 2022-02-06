@@ -31,5 +31,8 @@ object WordCountBatchApp {
     }
   }
 
+  // TODO: implement this function
+  // HINT: you may have done this before in Scala practice...
+  def splitSentenceIntoWords(sentence: String): Array[String] = ???
 
 }
