@@ -4,12 +4,12 @@ import org.apache.log4j.Logger
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions._
 
-object MyBatchApp {
+object WordCountBatchApp {
   lazy val logger: Logger = Logger.getLogger(this.getClass)
-  val jobName = "MyApp"
+  val jobName = "WordCountBatchApp"
 
   def main(args: Array[String]): Unit = {
-
+    logger.info(s"$jobName starting...")
     try {
       val spark = SparkSession.builder()
         .appName(jobName)
@@ -20,6 +20,8 @@ object MyBatchApp {
 
       val sentences = spark.read.csv("src/main/resources/sentences.txt").as[String]
       sentences.printSchema
+
+      // TODO: implement me
 
       //val counts = ???
 
