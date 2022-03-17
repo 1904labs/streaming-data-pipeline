@@ -3,7 +3,7 @@ package com.labs1904.hwe.exercises
 import org.scalatest.FunSpec
 
 
-class ChallengeTests extends FunSpec{
+class ChallengeProblemsTests extends FunSpec{
 describe("Challenge One") {
   it("Checks if the string returned is the same as the string passed in"){
     val input: String = "Hello!"
