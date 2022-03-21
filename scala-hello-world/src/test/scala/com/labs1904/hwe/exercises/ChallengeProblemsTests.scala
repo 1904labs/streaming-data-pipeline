@@ -4,15 +4,15 @@ import org.scalatest.FunSpec
 
 
 class ChallengeProblemsTests extends FunSpec{
-describe("Challenge One") {
-  it("Checks if the string returned is the same as the string passed in"){
-    val input: String = "Hello!"
-    val expected: String = "Hello!"
-
-    val actual = ChallengeProblems.sameString(input)
-    assert(expected === actual)
-  }
-}
+//describe("Challenge One") {
+//  it("Checks if the string returned is the same as the string passed in"){
+//    val input: String = "Hello!"
+//    val expected: String = "Hello!"
+//
+//    val actual = ChallengeProblems.sameString(input)
+//    assert(expected === actual)
+//  }
+//}
 
 //  describe("Challenge Two") {
 //    it("Checks if the string returned is the same as the string passed in"){
