@@ -10,7 +10,7 @@ import java.util.{Properties, UUID}
 
 object JSONConsumer {
 
-  val BootstrapServer = "localhost:9092"
+  val BootstrapServer = "change-me"
   val Topic: String = "change-me"
   implicit val formats: DefaultFormats.type = DefaultFormats
 

@@ -8,8 +8,7 @@ import java.time.Duration
 import java.util.{Properties, UUID, Arrays}
 
 object SimpleConsumer {
-  // TODO: this is configured to use kafka running locally, change it to your cluster
-  val BootstrapServer = "localhost:9092"
+  val BootstrapServer = "change-me"
   val Topic: String = "change-me"
 
   implicit val formats: DefaultFormats.type = DefaultFormats
