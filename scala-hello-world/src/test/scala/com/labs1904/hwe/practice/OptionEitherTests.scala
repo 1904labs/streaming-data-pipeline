@@ -3,42 +3,42 @@ package com.labs1904.hwe.practice
 import org.scalatest.FunSpec
 
 class OptionEitherTests extends FunSpec {
-  describe("dog age") {
-    it("should return none when none is given") {
-      val humanAge = None
-      val expected = None
+//  describe("dog age") {
+//    it("should return none when none is given") {
+//      val humanAge = None
+//      val expected = None
+//
+//      val actual = OptionEither.dogAge(humanAge)
+//      assert(actual === expected)
+//    }
+//
+//    it("should return correct dog age") {
+//      val humanAge: Option[Int] = Some(4)
+//      val expected = Some(28)
+//
+//      val actual = OptionEither.dogAge(humanAge)
+//      assert(actual === expected)
+//    }
+//  }
 
-      val actual = OptionEither.dogAge(humanAge)
-      assert(actual === expected)
-    }
-
-    it("should return correct dog age") {
-      val humanAge: Option[Int] = Some(4)
-      val expected = Some(28)
-
-      val actual = OptionEither.dogAge(humanAge)
-      assert(actual === expected)
-    }
-  }
-
-  describe("Total Cost"){
-    it("Should cost with tax, if a cost is provided"){
-      val item: Item = Item("BoomBox", Some(100))
-      val expected = Some(107)
-
-      val actual = OptionEither.totalCost(item)
-      assert(actual === expected)
-    }
-
-    it("Should return None if no tax is provided"){
-      val item: Item = Item("Free Tickets", None)
-      val expected = None
-
-      val actual = OptionEither.totalCost(item)
-      assert(actual === expected)
-    }
-  }
-
+//  describe("Total Cost"){
+//    it("Should cost with tax, if a cost is provided"){
+//      val item: Item = Item("BoomBox", Some(100))
+//      val expected = Some(107)
+//
+//      val actual = OptionEither.totalCost(item)
+//      assert(actual === expected)
+//    }
+//
+//    it("Should return None if no tax is provided"){
+//      val item: Item = Item("Free Tickets", None)
+//      val expected = None
+//
+//      val actual = OptionEither.totalCost(item)
+//      assert(actual === expected)
+//    }
+//  }
+//
   describe("Average Temperatures List") {
     it("Should return the average temprature"){
 
