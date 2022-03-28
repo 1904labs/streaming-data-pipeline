@@ -13,7 +13,7 @@ object KafkaHomework {
    * Implement all the todos below
    */
 
-    //TODO: Change bootstrap server and topic string to what is given in class/Discord
+    //TODO: If these are given in class, change them so that you can run a test. If not, don't worry about this step
   val BootstrapServer = "change-me"
   val Topic: String = "change-me"
 
@@ -42,7 +42,7 @@ object KafkaHomework {
         //TODO: Describe why we need the .value() at the end of record
         val message = record.value()
 
-        //TODO: Your final todo! Run the app with the green play button and make sure it runs successfully. You should see message(s) printing out to the screen
+        //TODO: If you were given the values for the bootstrap servers in class, run the app with the green play button and make sure it runs successfully. You should see message(s) printing out to the screen
         println(s"Message Received: $message")
       })
     }
