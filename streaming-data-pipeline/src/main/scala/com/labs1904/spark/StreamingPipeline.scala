@@ -24,12 +24,10 @@ object StreamingPipeline {
 
   def main(args: Array[String]): Unit = {
     try {
-      val spark = SparkSession.builder()
-        .config("spark.hadoop.dfs.client.use.datanode.hostname", "true")
-        .config("spark.hadoop.fs.defaultFS", "hdfs://manager.hourswith.expert:8020")
-        .appName(jobName)
-        .master("local[*]")
-        .getOrCreate()
+
+      val spark = SparkSession.builder().config("spark.sql.shuffle.partitions", "3").appName(jobName).master("local[*]").getOrCreate()
+      // TODO: change bootstrap servers to your kafka brokers
+      val bootstrapServers = "localhost:9092"
 
       import spark.implicits._
 
