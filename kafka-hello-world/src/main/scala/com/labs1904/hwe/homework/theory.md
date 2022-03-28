@@ -23,11 +23,13 @@ reword confusing descriptions in a way that makes sense to you.
 #### What is Kafka?
 * Helpful resource: [Kafka in 6 minutes](https://youtu.be/Ch5VhJzaoaI) 
 
-#### Describe each of the following with an example of how they all fit together - Topic, Producer, Consumer, Broker, Partition
+#### Describe each of the following with an example of how they all fit together: 
+ * Topic
+ * Producer
+ * Consumer 
+ * Broker
+ * Partition
 
-#### What role does Zookeeper play in Kafka? Is zookeeper being phased out? 
-* Helpful resource: [Zookeeper in Kafka](https://www.cloudkarafka.com/blog/cloudkarafka-what-is-zookeeper.html)
-* Helpful resource: [Zookeeper](https://towardsdatascience.com/kafka-no-longer-requires-zookeeper-ebfbf3862104)
 #### Describe Kafka Producers and Consumers
 
 #### How are consumers and consumer groups different in Kafka? 

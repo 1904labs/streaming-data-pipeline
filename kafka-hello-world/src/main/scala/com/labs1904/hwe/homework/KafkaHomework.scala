@@ -30,9 +30,7 @@ object KafkaHomework {
     //TODO: What does this line mean? Write your answer in a comment below
     consumer.subscribe(Arrays.asList(Topic))
 
-    while ( {
-      true
-    }) {
+    while (true) {
       // TODO: Change this to be every 5 seconds
       val duration: Duration = Duration.ofMillis(100)
 
