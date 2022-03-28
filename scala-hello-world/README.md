@@ -20,6 +20,7 @@ tests for every challenge in ChallengeProblems.scala. Implement code with passin
 moving on to the next challenge. There are 12 challenges total. 
 
 *Note- Make sure to name each function with the name you find in the tests
+*Additional Note - Uncomment test cases one at a time to run the tests
 
 
 ## Challenge #3 - Complete the decoder challenge from the application in Scala
