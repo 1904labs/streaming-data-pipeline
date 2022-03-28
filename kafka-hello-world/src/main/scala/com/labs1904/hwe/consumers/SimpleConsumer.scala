@@ -1,16 +1,24 @@
 package com.labs1904.hwe.consumers
 
+import com.labs1904.hwe.util.Util.getScramAuthString
 import net.liftweb.json.DefaultFormats
 import org.apache.kafka.clients.consumer.{ConsumerConfig, ConsumerRecord, ConsumerRecords, KafkaConsumer}
 import org.apache.kafka.common.serialization.StringDeserializer
 
 import java.time.Duration
-import java.util.{Properties, UUID, Arrays}
+import java.util.{Arrays, Properties, UUID}
 
 object SimpleConsumer {
-  // TODO: this is configured to use kafka running locally, change it to your cluster
-  val BootstrapServer = "localhost:9092"
-  val Topic: String = "change-me"
+  val BootstrapServer : String = "CHANGEME"
+  val Topic: String = "CHANGEME"
+  val username: String = "CHANGEME"
+  val password: String = "CHANGEME"
+  //Use this for Windows
+  val trustStore: String = "src\\main\\resources\\kafka.client.truststore.jks"
+  //Use this for Mac
+  //val trustStore: String = "src/main/resources/kafka.client.truststore.jks"
+
+
 
   implicit val formats: DefaultFormats.type = DefaultFormats
 
@@ -45,8 +53,13 @@ object SimpleConsumer {
     properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, classOf[StringDeserializer].getName)
     properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, classOf[StringDeserializer].getName)
     properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, UUID.randomUUID().toString)
-
     properties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest")
+
+    properties.put("security.protocol", "SASL_SSL")
+    properties.put("sasl.mechanism", "SCRAM-SHA-512")
+    properties.put("ssl.truststore.location", trustStore)
+    properties.put("sasl.jaas.config", getScramAuthString(username, password))
+
     properties
   }
 }

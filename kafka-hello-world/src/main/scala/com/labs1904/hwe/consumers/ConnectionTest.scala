@@ -1,16 +1,23 @@
 package com.labs1904.hwe.consumers
 
+import com.labs1904.hwe.util.Util
 import net.liftweb.json.DefaultFormats
 import org.apache.kafka.clients.consumer.{ConsumerConfig, ConsumerRecord, ConsumerRecords, KafkaConsumer}
 import org.apache.kafka.common.serialization.StringDeserializer
 
 import java.time.Duration
-import java.util.{Properties, UUID, Arrays}
+import java.util.{Arrays, Properties, UUID}
 
 object ConnectionTest {
   // TODO: this is configured to use kafka running locally, change it to your cluster
-  val BootstrapServer = "CHANGEME"
-  val Topic: String = "connection-test"
+  val BootstrapServer : String = "CHANGEME"
+  val Topic: String = "hwe-kafka-connection-test"
+  val username: String = "CHANGEME"
+  val password: String = "CHANGEME"
+  //Use this for Windows
+  val trustStore: String = "src\\main\\resources\\kafka.client.truststore.jks"
+  //Use this for Mac
+  //val trustStore: String = "src/main/resources/kafka.client.truststore.jks"
 
   implicit val formats: DefaultFormats.type = DefaultFormats
 
@@ -48,14 +55,9 @@ object ConnectionTest {
     properties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest")
     properties.put("security.protocol", "SASL_SSL")
     properties.put("sasl.mechanism", "SCRAM-SHA-512")
-    properties.put("ssl.truststore.location", "src\\main\\resources\\kafka.client.truststore.jks")
-    properties.put("sasl.jaas.config", getScramAuthString(username="CHANGEME", password="CHANGEME"))
+    properties.put("ssl.truststore.location", trustStore)
+    properties.put("sasl.jaas.config", Util.getScramAuthString(username, password))
     properties
   }
 
-  def getScramAuthString(username: String, password: String) = {
-   s"""org.apache.kafka.common.security.scram.ScramLoginModule required
-   username=\"$username\"
-   password=\"$password\";"""
-  }
 }
