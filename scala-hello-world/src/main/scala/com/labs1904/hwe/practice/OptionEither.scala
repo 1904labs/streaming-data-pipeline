@@ -33,8 +33,11 @@ object OptionEither {
     Returns None if the list is empty or no weather stations contain any temperature reading.
    */
   def averageTemperature(temperatures: List[WeatherStation]): Option[Int] = {
-    // use temperatures.isEmpty?
-    // use foldLeft?
-    // val test = temperatures.map(x => x.temperature) gives a List[Option[Int]]
+    if (temperatures.isEmpty) None
+    else {
+      val temperatureList = temperatures.flatMap(x => x.temperature)
+      if (temperatureList.isEmpty) None
+      else Option(temperatureList.sum / temperatureList.length)
+    }
   }
 }
