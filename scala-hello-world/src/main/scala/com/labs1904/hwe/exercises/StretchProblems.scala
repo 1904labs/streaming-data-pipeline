@@ -5,7 +5,9 @@ object StretchProblems {
   /*
   Checks if a string is palindrome.
  */
-  def isPalindrome(s: String): Boolean = ???
+  def isPalindrome(s: String): Boolean = {
+    s == s.toList.reverse.mkString("")
+  }
 
   /*
 For a given number, return the next largest number that can be created by rearranging that number's digits.
