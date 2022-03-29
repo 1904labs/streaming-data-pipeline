@@ -75,13 +75,7 @@ object ChallengeProblems extends App {
     Returns - Int
    */
   def sumList(myList: List[Int]): Int = {
-    // myList.sum
-
-    if (myList.isEmpty) {
-      0
-    } else {
-      myList.head + sumList(myList.tail)
-    }
+    myList.sum
   }
 
   /**
