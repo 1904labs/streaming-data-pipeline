@@ -1,5 +1,7 @@
 package com.labs1904.hwe.exercises
 
+import scala.util.control.Breaks.{break, breakable}
+
 object StretchProblems extends App {
 
   /*
@@ -15,7 +17,6 @@ If no larger number can be created, return -1
  */
   def getNextBiggestNumber(i: Integer): Int = {
     //TODO: Implement me!
-    0
     /*
     // figure out pattern with numbers
     111 > -1
@@ -24,6 +25,7 @@ If no larger number can be created, return -1
     212 > 221
     213 > 231
     489236592 > 489236952
+    3421 > 4123
 
     // figure out pattern with words:
     // start from the back
@@ -34,27 +36,31 @@ If no larger number can be created, return -1
     // if number is bigger, return it
     // etc.
     // use recursion
-
+    // actually...incorrect algorithm. If I enter 3421, I want to return 4123, not 4321. Rethink.
      */
 
-    val seq = i.toString.toSeq
-    val right = seq(seq.length - 1)
-    val left = seq(seq.length - 2)
-    val seqSwapped = seq.take(seq.length - 2) + right.toString + left.toString
-    if (seqSwapped.mkString("").toInt > seq.mkString("").toInt) {
-      println(seqSwapped.mkString("").toInt)
+    // To Do:
+    // fix algorithm
+    // add in -1...but this may change the logic a fair bit..?
+    // very ugly right now - figure out more elegant way
+
+    def swap(offset: Integer, i: Integer): Integer = {
+      val seq = i.toString.toSeq
+      val right = seq(seq.length - (1 + offset))
+      val left = seq(seq.length - (2 + offset))
+      val seqSwapped = seq.take(seq.length - (2 + offset)) + right.toString + left.toString + seq.takeRight(offset)
       seqSwapped.mkString("").toInt
-    } else {
-      println(-1)
-      -1
     }
 
-    // To Do:
-    // only works for last two digits - need to make it recursive
-    // very ugly right now - figure out more elegant way
+    var offset = 0
+    while (swap(offset = offset, i = i) < i) {
+      offset += 1
+    }
+    println(swap(offset = offset, i = i))
+    swap(offset = offset, i = i)
 
   }
 
-  getNextBiggestNumber(548413)
+  getNextBiggestNumber(3421)
 
 }
