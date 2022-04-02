@@ -23,7 +23,7 @@ reword confusing descriptions in a way that makes sense to you.
 
 #### What is Kafka?
 * Helpful resource: [Kafka in 6 minutes](https://youtu.be/Ch5VhJzaoaI) 
-* Answer: A distributed (spread out between multiple servers) system (meaning software + servers (brokers), data stores, etc.) which takes in a bunch of real time streaming data (events) from various sources, organizes it, and stores it temporarily (e.g. 1 day). People / computers / etc. (consumers) who want to know about that data can connect to it (subscribe) and get it (consume it). Because Kafka is distributed, it can handle lots of data coming into it, and lots of consumers subscribing to it, without breaking (or rather, when something does break, there are backups so no data gets lost).  
+* Answer: A distributed (spread out between multiple servers) system (meaning software + servers (brokers), I think) which takes in a bunch of real time streaming data (events) from various sources, organizes it, and stores it temporarily (e.g. 1 day). Applications (consumers) who want to know about that data can connect to it (subscribe) and get it (consume it). Because Kafka is distributed, it can handle lots of data coming into it, and lots of consumers subscribing to it, without breaking (or rather, when something does break, there are backups so no data gets lost).  
 
 #### Describe each of the following with an example of how they all fit together: 
  * Topic: group of partitions handling the same type of data
@@ -47,18 +47,29 @@ reword confusing descriptions in a way that makes sense to you.
   * So suppose a consumer group has consumer 1, consumer 2, and consumer 3, and there are two partitions. If consumer 1 is reading from partition 1, and consumer 2 is reading from partition 2, then consumer 3 won't be allowed to read from anything and will sit idle.
   * Note: I think Kafka stores the offsets at a group level, not an individual level. So suppose c1 and c2 are in cg1, and c1 is reading from p1 and c2 is reading from p2. If c1 goes away (for whatever reason - goes offline, etc.) after reading offset 55, then Kafka stores something like "cg1 left off at 55". So then c2 could just take over, and Kafka knows c2 is in cg1, so c2 can just start reading at offset 56 in p1 (and continue reading p2 like always).
 #### How are Kafka offsets different than partitions? 
-* Answer: Kafka assigns a unique sequential number to each piece of data within a partition, and that number is called the "offset". It means basically the same thing as index. The first piece of data in that partition will have offset 0, the second will have offset 1, etc. (so they are ordered by time, sequentially). The offsets are only unique within a partition - so both partition 0 and partition 1 will have offset 0, offset 1, offset 2, etc. The combination of partition + offset uniquely identifies a piece of data, I believe. 
+* Answer: Kafka assigns a unique sequential number to each piece of data within a partition, and that number is called the "offset". The first piece of data in that partition will have offset 0, the second will have offset 1, etc. (so they are ordered by time, sequentially). The offsets are only unique within a partition - so both partition 0 and partition 1 will have offset 0, offset 1, offset 2, etc. The combination of partition + offset uniquely identifies a piece of data, I believe (aka, those two things together form the index of the piece of data?).
 
 #### How is data assigned to a specific partition in Kafka? 
 * Answer: Something about a piece of data is designated to be the "partition key". If a piece of data is "the score of the Knicks / Warriors game at halftime is 40-42" then the partition key could be "the Knicks / Warriors game". That piece of data goes into partition 0, in which every other piece of data with partition key "the Knicks / Warriors game" also goes. The data with partition key "the Bucks / Pistons game" goes into partition 1. Etc.
 
 #### Describe immutability - Is data on a Kafka topic immutable? 
 * Answer: 
+  * From a producer's point of view, data can only be appended, not deleted or changed. 
+  * From an administrative API point of view, data can be deleted - so if a producer appends Location: USA and then later appends Location: Canada, eventually the Location: USA will get deleted. I think this process is called...compaction? 
+    * Also, if a producer appends Location: USA and then later just wants Location to be deleted entirely, not changed to Canada, then they would append Location: null and when the compaction process runs, it would delete location entirely (aka...add a "tombstone" I think?)
+  * Also, all data is deleted automatically after the retention period (2 weeks by default, I think). 
 
 #### How is data replicated across brokers in kafka? If you have a replication factor of 3 and 3 brokers, explain how data is spread across brokers
 * Helpful resource [Brokers and Replication factors](https://youtu.be/ZOU7PJWZU9w)
 * Answer: 
+  * 1 topic, 1 partition: broker 1 (b1) has the "leader" partition (replica 1), and b2 and b3 each have a copy of that data, called "in sync replicas" (replicas 2 and 3)
+  * 1 topic, 2 partitions: b1 has p1r1 and p2r2, b2 has p1r2 and p2r1, and b3 has p1r3 and p2r3
+  * 1 topic, 3 partitions: b1 has p1r1, p2r2, p3r2; b2 has p1r2, p2r1, p3r3; b3 has p1r3, p2r3, p3r1
+  * In general, if you have a replication factor of 3 and 3 brokers, then every piece of data will be on each of the three brokers, so that if one or even two of the brokers crash or go offline for some reason, you can still serve up the full dataset because each broker has a full copy of the data on it
+  * Each partition has only one leader at a time; the rest of the replicas are followers, meaning they just copy data from the leader and nothing can be read from or written to them. When a leader goes away for some reason, there's some system for figuring out which follower will be promoted to the new leader
 
 #### What was the most fascinating aspect of Kafka to you while learning? 
-* similar to Cosmos DB (Azure's distributed NoSQL database)
+* somewhat similar to Cosmos DB (Azure's distributed NoSQL database), which I'm familiar with
 * when a consumer is reading data, it (or Kafka?) is also writing [a small amount of] data to Kafka - the offset values that the consumer has read, so that it can leave, come back, and pick up where it left off - like a bookmark.
+* seems pretty easy to use (from what people described, anyways...) and a lot of the hard work is done "under the hood"
+* interesting that followers are not even allowed to be read from - seems like you might want that sometimes to allow for faster reads/scalability, even if the data isn't guaranteed to be 100% up to date?
