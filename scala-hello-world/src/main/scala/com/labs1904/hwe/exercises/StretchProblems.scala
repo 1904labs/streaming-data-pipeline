@@ -1,7 +1,5 @@
 package com.labs1904.hwe.exercises
 
-import scala.util.control.Breaks.{break, breakable}
-
 object StretchProblems extends App {
 
   /*
@@ -17,50 +15,50 @@ If no larger number can be created, return -1
  */
   def getNextBiggestNumber(i: Integer): Int = {
     //TODO: Implement me!
-    /*
-    // figure out pattern with numbers
-    111 > -1
-    112 > 121
-    113 > 131
-    212 > 221
-    213 > 231
-    489236592 > 489236952
-    3421 > 4123
 
-    // figure out pattern with words:
-    // start from the back
-    // I'll refer to the last digit's place as 1, the second to last as 2, etc.
-    // swap the last two digits (1 and 2)
-    // if number is bigger, return it
-    // if not, swap 2 and 3 (leaving 1 and 2 unswapped)
-    // if number is bigger, return it
-    // etc.
-    // use recursion
-    // actually...incorrect algorithm. If I enter 3421, I want to return 4123, not 4321. Rethink.
+    /*
+    // Example:
+    23541 -> 24135
+    starting from the right, find the first case where a right digit (x) is bigger than the digit to its left (y)
+      x = 5, y = 3
+    find the smallest digit to right of y that is bigger than x (if none, use x); call this z
+      z = 4
+    put z to the left of y
+      24
+    sort everything to the right of z smallest to largest
+      135
+    put them together
+      24135
+
      */
 
-    // To Do:
-    // fix algorithm
-    // add in -1...but this may change the logic a fair bit..?
-    // very ugly right now - figure out more elegant way
-
-    def swap(offset: Integer, i: Integer): Integer = {
-      val seq = i.toString.toSeq
-      val right = seq(seq.length - (1 + offset))
-      val left = seq(seq.length - (2 + offset))
-      val seqSwapped = seq.take(seq.length - (2 + offset)) + right.toString + left.toString + seq.takeRight(offset)
-      seqSwapped.mkString("").toInt
-    }
-
     var offset = 0
-    while (swap(offset = offset, i = i) < i) {
-      offset += 1
-    }
-    println(swap(offset = offset, i = i))
-    swap(offset = offset, i = i)
+    val s = i.toString.toSeq
 
+    def findInsertIndex(i: Integer): Integer = {
+      val indexOfRight = s.length - (1 + offset)
+      val indexOfLeft = s.length - (2 + offset)
+      val rightIsBigger = s(indexOfRight) > s(indexOfLeft)
+      if (rightIsBigger)
+        return indexOfLeft
+      else
+        offset = offset + 1
+        findInsertIndex(i)
+    }
+
+    val insertIndex = findInsertIndex(i)
+    val numsSorted = s.takeRight(i.toString.length - insertIndex).sorted
+    val zIndex = numsSorted.lastIndexOf(s(insertIndex) + 2)
+    val z = s(zIndex)
+    val sReordered = s.take(insertIndex).toString() + z + numsSorted.take(zIndex - 1) + numsSorted.drop(zIndex)
+    println(sReordered.toInt)
+    sReordered.toInt
   }
 
-  getNextBiggestNumber(3421)
+    // To Do:
+    // test various inputs
+    // add in -1, etc
+
+  getNextBiggestNumber(23541)
 
 }
