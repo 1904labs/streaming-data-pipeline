@@ -1,5 +1,8 @@
 package com.labs1904.hwe.exercises
 
+import scala.annotation.tailrec
+import scala.math.abs
+
 object StretchProblems extends App {
 
   /*
@@ -18,6 +21,7 @@ If no larger number can be created, return -1
 
     /*
     // Example:
+    //// Positive numbers
     23541 -> 24135
     starting from the right, find the first case where a right digit (x) is bigger than the digit to its left (y)
       x = 5, y = 3
@@ -30,35 +34,54 @@ If no larger number can be created, return -1
     put them together
       24135
 
+    //// Negative numbers:
+    -53124 -> -52431
+    still need to implement the code for this
+    doesn't work right for negatives with more than one digit
+    need to strip the negative sign I think, then add it back in?
+
      */
 
-    var offset = 0
-    val s = i.toString.toSeq
-
-    def findInsertIndex(i: Integer): Integer = {
-      val indexOfRight = s.length - (1 + offset)
-      val indexOfLeft = s.length - (2 + offset)
-      val rightIsBigger = s(indexOfRight) > s(indexOfLeft)
-      if (rightIsBigger)
-        return indexOfLeft
-      else
-        offset = offset + 1
-        findInsertIndex(i)
+    if (abs(i) / 10 < 1) {
+      -1
     }
+    else if (i.toString.length == 2)
+      if (i.toString.reverse.toInt > i)
+        i.toString.reverse.toInt
+      else
+        -1
+    else {
+      var offset = 0
+      val s = i.toString.toSeq
 
-    val insertIndex = findInsertIndex(i)
-    val numsSorted = s.takeRight(i.toString.length - insertIndex).sorted
-    val zIndex = numsSorted.lastIndexOf(s(insertIndex) + 2)
-    val z = s(zIndex)
-    val sReordered = s.take(insertIndex).toString() + z + numsSorted.take(zIndex - 1) + numsSorted.drop(zIndex)
-    println(sReordered.toInt)
-    sReordered.toInt
+      @tailrec def findInsertIndex(i: Integer): Integer = {
+        val indexOfRight = s.length - (1 + offset)
+        val indexOfLeft = s.length - (2 + offset)
+        val rightIsBigger = s(indexOfRight) > s(indexOfLeft)
+        if (offset == s.length - 2)
+          return -1
+        if (rightIsBigger)
+          return indexOfLeft
+        else
+          offset = offset + 1
+        findInsertIndex(i)
+      }
+
+      val insertIndex = findInsertIndex(i)
+
+      if (insertIndex == -1)
+        return -1
+
+      val rightNumsSorted = s.takeRight(i.toString.length - insertIndex).sorted
+      val numToMoveIndex = rightNumsSorted.lastIndexOf(s(insertIndex)) + 1
+      val numToMove = rightNumsSorted(numToMoveIndex)
+      val leftPart = s.take(insertIndex).toString()
+      val rightPart = rightNumsSorted.take(numToMoveIndex) + rightNumsSorted.takeRight(rightNumsSorted.length - numToMoveIndex - 1).toString()
+      val nextBiggestNumber = leftPart + numToMove + rightPart
+      nextBiggestNumber.toInt
+    }
   }
 
-    // To Do:
-    // test various inputs
-    // add in -1, etc
-
-  getNextBiggestNumber(23541)
+//  getNextBiggestNumber(-121)
 
 }
