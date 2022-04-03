@@ -57,10 +57,9 @@ If no larger number can be created, return -1
       @tailrec def findInsertIndex(i: Integer): Integer = {
         val indexOfRight = s.length - (1 + offset)
         val indexOfLeft = s.length - (2 + offset)
-        val rightIsBigger = s(indexOfRight) > s(indexOfLeft)
         if (offset == s.length - 2)
           return -1
-        if (rightIsBigger)
+        if (s(indexOfRight) > s(indexOfLeft))
           return indexOfLeft
         else
           offset = offset + 1
