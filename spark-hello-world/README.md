@@ -1,6 +1,16 @@
 # spark-hello-world
 An example Spark application written in Scala and setup using Maven.
 
+
+## Homework Instructions
+Your work on the homework is to use any resources you can find to answer all the questions asked in spark_theory.md and HelloWorldBatchApp.scala.
+Here is what you need to complete: 
+
+* Start by completing your answers to the questions in spark-hello-world/src/main/com.labs1904.hwe/homework/spark_theory.md. There are further instructions on spark_theory.md that give tips and helpful resources to guide you in the right direction. You are welcome to use any resources you can find (youtube, articles, books, your teachers, etc)
+* Complete the TODOs in HelloWorldBatchApp.scala in the same directory as spark_theory.md
+* **Important Note** - Do not commit the bootstrap servers to github. You are welcome to commit and push your work to github, but make sure to change them back to "change-me" before committing and pushing to github. 
+## Studio Instructions
+
 # The Lab
 
 ## Challenge 1: Run the Batch App
