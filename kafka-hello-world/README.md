@@ -6,39 +6,73 @@ A maven project for interacting with Kafka.
 
 
 
-# The Lab
+### The Lab
 
-## Describe the topic "question-1"
+#### Run connection test to make sure you have access
 
-A topic exists called "question-1". Use the command line to describe the topic "question-1":
+In com.labs1904.hwe navigate to ConnectionTest and fill out the strings with the correct values that are given to you in class. 
+Run the class and make sure you have an output that says Message Received: <some message> 
 
-- How many partitions does it have?
-- What is the replication factor?
-- Hint: There is an example describe command in the `CLICommands.md`
+#### Consume from "question-1" and print to console
 
-## Create a topic "question-2"
+A topic exists called "question-1" with CSV strings as its messages. Using `SimpleConsumer`:
 
-Using the Kafka CLI, create a topic with 3 partitions and a replication factor of 3. Call the topic "
-question-2-yourname".
+- Consume from the topic
+- Print out the strings to understand their structure.
 
-## Consume from "question-3"
+#### Consume from "question-1" and populate a case class
 
-A topic already exists called "question-3". Using `SimpleConsumer`, what are the first ten messages at the beginning of
-this topic?
+Modify your solution to the problem above by adding the following functionality:
+- Create a case class named `RawUser` that matches the data's structure.
+- Split the CSV string on commas, and populate an instance of the scala case class that you created.
 
-## Produce to "question-4"
+#### Consume from "question-1", populate a case class, and enrich the data from a map
 
-Using `SimpleProducer`, produce your name as a string to the topic "question-4". Verify it is there by
-using `SimpleConsumer` to read from the "question-4" topic
+Modify your solution to the problem above by adding the following functionality:
+- Create a new case class named `EnrichedUser` that adds 2 new columns:
+   * numberAsWord - convert the first field (which is numeric) into a string using the `Util.mapNumberToWord` function
+   * hweDeveloper - hard-code your name here. (This is so you can tell your data apart from everyone else's)
+- For each record processed, populate an instance of `EnrichedUser`
 
-## Consume from "question-5"
+#### Consume from "question-1", populate a case class, enrich the data from a map, and write to Kafka
 
-A topic exists called "question-5" with JSON strings as its messages. Using `JSONConsumer`,
+Modify your solution to the problem above by adding the following functionality:
+- Convert your instance of `EnrichedUser` into a comma-separated string of values
+- Write the comma-separated string to a topic named `question-1-output`
+- Terminate your `HweConsumer` process and use `SimpleConsumer` to try and find your data!
 
-- Print out the string to understand the structure.
-- Create a case class that matches this data structure.
-- Parse the JSON string into the scala case class that you created.
+### Potential Problems
 
-## Stretch #1 - Theory
+#### When I run the ConnectionTest, my program just hangs!
 
-What is the CAP theorem, and where does Kafka fit within it?
+There is likely a problem with your IP address - fill out the [What's Your IP?](https://docs.google.com/forms/d/e/1FAIpQLSde9gi2LQXk3-OAgqtyMOB2j0bkcYFMFV27MseqWXEd_ja6rA/viewform) form again
+ and ask a TA to re-approve you.
+
+#### When I run the ConnectionTest, it complains "Failed to construct the kafka consumer!: Failed to load SSL keystore"
+
+If you see an error message like this:
+`
+Exception in thread "main" org.apache.kafka.common.KafkaException: Failed to construct kafka consumer
+...
+Caused by: org.apache.kafka.common.KafkaException: org.apache.kafka.common.KafkaException: Failed to load SSL keystore src\main\resources\kafka.client.truststore.jks of type JKS`
+
+then there are 2 things to double check here:
+
+1. Make sure exactly one of the 2 lines below is uncommented, depending if you are on a Windows or a Mac:
+`
+//Use this for Windows
+val trustStore: String = "src\\main\\resources\\kafka.client.truststore.jks"
+//Use this for Mac
+//val trustStore: String = "src/main/resources/kafka.client.truststore.jks"
+`
+
+2. In your Intellij Run Configuration, make sure your "Working Directory" is set to "C:\Path\To\Your\Downloaded\Repo\kafka-hello-world"
+
+#### When I run the ConnectionTest, I get an error about "SaslAuthenticationException: Authentication failed during authentication due to invalid credentials with SASL mechanism SCRAM-SHA-512
+"!
+
+If you see an error message like this below, your username or password is incorrect.
+
+`
+Exception in thread "main" org.apache.kafka.common.errors.SaslAuthenticationException: Authentication failed during authentication due to invalid credentials with SASL mechanism SCRAM-SHA-512
+`
