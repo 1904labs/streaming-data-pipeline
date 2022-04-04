@@ -15,36 +15,20 @@ Here is what you need to complete:
 
 ### The Lab
 
-#### Describe the topic "question-1"
+#### Run connection test to make sure you have access
 
-A topic exists called "question-1". Use the command line to describe the topic "question-1":
+In com.labs1904.hwe navigate to ConnectionTest and fill out the strings with the correct values that are given to you in class. 
+Run the class and make sure you have an output that says Message Received: <some message> 
 
-- How many partitions does it have?
-- What is the replication factor?
-- Hint: There is an example describe command in the `CLICommands.md`
+#### Consume from "question-1"
 
-#### Create a topic "question-2"
-
-Using the Kafka CLI, create a topic with 3 partitions and a replication factor of 3. Call the topic "
-question-2-yourname".
-
-#### Consume from "question-3"
-
-A topic already exists called "question-3". Using `SimpleConsumer`, what are the first ten messages at the beginning of
-this topic?
-
-#### Produce to "question-4"
-
-Using `SimpleProducer`, produce your name as a string to the topic "question-4". Verify it is there by
-using `SimpleConsumer` to read from the "question-4" topic
-
-#### Consume from "question-5"
-
-A topic exists called "question-5" with JSON strings as its messages. Using `JSONConsumer`,
+A topic exists called "question-1" with JSON strings as its messages. Using `JSONConsumer`,
 
 - Print out the string to understand the structure.
 - Create a case class that matches this data structure.
 - Parse the JSON string into the scala case class that you created.
+
+
 
 #### Stretch #1 - Theory
 
