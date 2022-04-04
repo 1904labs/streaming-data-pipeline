@@ -35,11 +35,10 @@ reword confusing descriptions in a way that makes sense to you.
 * DataFrame
 * DataSet
 
-#### What is a cluster manager and what does it do in Spark? 
-Focus on YARN for this class: [Cluster Managers](https://techvidvan.com/tutorials/spark-cluster-manager-yarn-mesos-and-standalone/#:~:text=2.-,Hadoop%20Yarn,with%20executors%20and%20pluggable%20scheduler.)
-
-#### What are spark transformations and spark actions? 
+#### What is a spark transformation?
 [Spark By Examples-Transformations](https://sparkbyexamples.com/apache-spark-rdd/spark-rdd-transformations/)
+
+#### What is a spark action? How do actions differ from transformations? 
 
 #### What is a partition in spark? Why would you ever need to repartition? 
 [Spark Partitioning](https://sparkbyexamples.com/spark/spark-repartition-vs-coalesce/)
