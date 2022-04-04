@@ -10,7 +10,7 @@ import java.util.{Arrays, Properties, UUID}
 
 object SimpleConsumer {
   val BootstrapServer : String = "CHANGEME"
-  val Topic: String = "CHANGEME"
+  val Topic: String = "question-1"
   val username: String = "CHANGEME"
   val password: String = "CHANGEME"
   //Use this for Windows

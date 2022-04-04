@@ -13,8 +13,8 @@ import java.util.{Arrays, Properties, UUID}
 
 object HweConsumer {
   val BootstrapServer : String = "CHANGEME"
-  val consumerTopic: String = "CHANGEME"
-  val producerTopic: String = "CHANGEME"
+  val consumerTopic: String = "question-1"
+  val producerTopic: String = "question-1-output"
   val username: String = "CHANGEME"
   val password: String = "CHANGEME"
   //Use this for Windows
@@ -49,6 +49,7 @@ object HweConsumer {
         val message = record.value()
         println(s"Message Received: $message")
         // TODO: Add business logic here!
+
       })
     }
   }

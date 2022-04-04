@@ -9,7 +9,7 @@ import java.util.Properties
 object SimpleProducer {
   // Set constants
   val BootstrapServer : String = "CHANGEME"
-  val Topic: String = "CHANGEME"
+  val Topic: String = "question-1-output"
   val username: String = "CHANGEME"
   val password: String = "CHANGEME"
   //Use this for Windows
