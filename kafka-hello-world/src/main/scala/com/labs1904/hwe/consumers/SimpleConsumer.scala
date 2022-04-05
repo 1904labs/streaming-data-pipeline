@@ -1,6 +1,6 @@
 package com.labs1904.hwe.consumers
 
-import com.labs1904.hwe.util.Util.getScramAuthString
+import com.labs1904.hwe.util.Util.{getScramAuthString, mapNumberToWord}
 import net.liftweb.json.DefaultFormats
 import org.apache.kafka.clients.consumer.{ConsumerConfig, ConsumerRecord, ConsumerRecords, KafkaConsumer}
 import org.apache.kafka.common.serialization.StringDeserializer
@@ -8,9 +8,11 @@ import org.apache.kafka.common.serialization.StringDeserializer
 import java.time.Duration
 import java.util.{Arrays, Properties, UUID}
 
+case class RawUser(id: Int, name: String, email: String)
+
 object SimpleConsumer {
   val BootstrapServer : String = "b-2-public.hwe-kafka-cluster.l384po.c8.kafka.us-west-2.amazonaws.com:9196,b-1-public.hwe-kafka-cluster.l384po.c8.kafka.us-west-2.amazonaws.com:9196,b-3-public.hwe-kafka-cluster.l384po.c8.kafka.us-west-2.amazonaws.com:9196"
-  val Topic: String = "question-1"
+  val Topic: String = "question-1-output"
   val username: String = "hwe"
   val password: String = "1904labs"
   //Use this for Windows
