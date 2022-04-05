@@ -12,15 +12,15 @@ import java.time.Duration
 import java.util.{Arrays, Properties, UUID}
 
 object HweConsumer {
-  val BootstrapServer : String = "CHANGEME"
+  val BootstrapServer : String = "b-2-public.hwe-kafka-cluster.l384po.c8.kafka.us-west-2.amazonaws.com:9196,b-1-public.hwe-kafka-cluster.l384po.c8.kafka.us-west-2.amazonaws.com:9196,b-3-public.hwe-kafka-cluster.l384po.c8.kafka.us-west-2.amazonaws.com:9196"
   val consumerTopic: String = "question-1"
   val producerTopic: String = "question-1-output"
-  val username: String = "CHANGEME"
-  val password: String = "CHANGEME"
+  val username: String = "hwe"
+  val password: String = "1904labs"
   //Use this for Windows
-  val trustStore: String = "src\\main\\resources\\kafka.client.truststore.jks"
+//  val trustStore: String = "src\\main\\resources\\kafka.client.truststore.jks"
   //Use this for Mac
-  //val trustStore: String = "src/main/resources/kafka.client.truststore.jks"
+  val trustStore: String = "src/main/resources/kafka.client.truststore.jks"
 
   implicit val formats: DefaultFormats.type = DefaultFormats
 
