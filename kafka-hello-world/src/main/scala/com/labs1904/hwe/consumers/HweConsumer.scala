@@ -49,6 +49,7 @@ object HweConsumer {
       records.forEach((record: ConsumerRecord[String, String]) => {
         // Retrieve the message from each record
         val message = record.value()
+
 //         println(s"Message Received: $message")
         // TODO: Add business logic here!
         val messageSplit = message.split(",")

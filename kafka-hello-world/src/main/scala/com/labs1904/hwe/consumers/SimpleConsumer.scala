@@ -11,6 +11,7 @@ import java.util.{Arrays, Properties, UUID}
 case class RawUser(id: Int, name: String, email: String)
 
 object SimpleConsumer {
+
   val BootstrapServer : String = "b-2-public.hwe-kafka-cluster.l384po.c8.kafka.us-west-2.amazonaws.com:9196,b-1-public.hwe-kafka-cluster.l384po.c8.kafka.us-west-2.amazonaws.com:9196,b-3-public.hwe-kafka-cluster.l384po.c8.kafka.us-west-2.amazonaws.com:9196"
   val Topic: String = "question-1-output"
   val username: String = "hwe"
