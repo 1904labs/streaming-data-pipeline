@@ -49,6 +49,22 @@ Implement the method named `splitSentenceIntoWords`.
 
 Use the method you implemented in your spark program.
 
+Update the application to output each word and the number of times it occurs, sorted by count descending. Output:
+
+```
++------+-----+
+| value|count|
++------+-----+
+|   the|    3|
+|    to|    3|
+|   new|    3|
+|    go|    1|
+|worlds|    1|
+|   its|    1|
+|   out|    1|
++------+-----+
+```
+
 ## Challenge 3: Run the HelloWorldStreamingApp Structured Streaming App
 
 Open up `HelloWorldStreamingApp.scala`. Run it just like you did the Batch App above.
@@ -66,7 +82,7 @@ Open up `WordCountStreamingApp.scala` and configure the app so that it can read 
 
 Run the app. What does the data look like?
 
-Refactor the app to do word count and print the top 10 counts to the console.
+Refactor the app to count each word, and print the top 10 counts to the console for each batch.
 
 What are some issues that you encountered with the data?
 
