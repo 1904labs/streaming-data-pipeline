@@ -21,6 +21,10 @@ object WordCountStreamingApp {
   val username: String = "CHANGEME"
   val password: String = "CHANGEME"
   val Topic: String = "word-count"
+
+  //Use this for Windows
+  //val trustStore: String = "src\\main\\resources\\kafka.client.truststore.jks"
+  //Use this for Mac
   val trustStore: String = "src/main/resources/kafka.client.truststore.jks"
 
   def main(args: Array[String]): Unit = {
@@ -38,11 +42,13 @@ object WordCountStreamingApp {
       val sentences = spark
         .readStream
         .format("kafka")
+        .option("maxOffsetsPerTrigger", 10)
         .option("kafka.bootstrap.servers", bootstrapServer)
         .option("subscribe", "word-count")
         .option("kafka.acks", "1")
         .option("kafka.key.serializer", classOf[StringSerializer].getName)
         .option("kafka.value.serializer", classOf[StringSerializer].getName)
+        .option("startingOffsets","earliest")
         .option("kafka.security.protocol", "SASL_SSL")
         .option("kafka.sasl.mechanism", "SCRAM-SHA-512")
         .option("kafka.ssl.truststore.location", trustStore)
@@ -58,6 +64,7 @@ object WordCountStreamingApp {
       val query = sentences.writeStream
         .outputMode(OutputMode.Append())
         .format("console")
+        .trigger(Trigger.ProcessingTime("5 seconds"))
         .start()
 
       query.awaitTermination()

@@ -62,11 +62,13 @@ Why do we run locally?
 The WordCountStreamingApp structured streaming app requires a Kafka cluster. The data on the topic is a list of
 sentences. 
 
-Open up `WordCountStreamingApp.scala`.
+Open up `WordCountStreamingApp.scala` and configure the app so that it can read from Kafka.
 
-Configure the app to read from the Kafka cluster and write the output to the console.
+Run the app. What does the data look like?
 
 Refactor the app to do word count and print the top 10 counts to the console.
+
+What are some issues that you encountered with the data?
 
 # Known Issues
 
