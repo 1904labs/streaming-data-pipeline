@@ -49,7 +49,23 @@ Implement the method named `splitSentenceIntoWords`.
 
 Use the method you implemented in your spark program.
 
-## Challenge 3: Run the Structured Streaming App
+Update the application to output each word and the number of times it occurs, sorted by count descending. Output:
+
+```
++------+-----+
+| value|count|
++------+-----+
+|   the|    3|
+|    to|    3|
+|   new|    3|
+|    go|    1|
+|worlds|    1|
+|   its|    1|
+|   out|    1|
++------+-----+
+```
+
+## Challenge 3: Run the HelloWorldStreamingApp Structured Streaming App
 
 Open up `HelloWorldStreamingApp.scala`. Run it just like you did the Batch App above.
 
@@ -57,32 +73,18 @@ How often is data printed out?
 Where is the data coming from?
 Why do we run locally?
 
-## Challenge 4: Connect the Structured Streaming app to Kafka
+## Challenge 4: Implement Word Count in the WordCountStreamingApp Structured Streaming app
 
-The structured streaming app requires a Kafka cluster. The data on the topic is from the [Amazon Customer Reviews Dataset](https://registry.opendata.aws/amazon-reviews/)
-and looks like the following example:
+The WordCountStreamingApp structured streaming app requires a Kafka cluster. The data on the topic is a list of
+sentences. 
 
-```json
-{
-  "marketplace": "US",
-  "customer_id": 1,
-  "review_id": "R26ZK6XLDT8DDS",
-  "product_id": "B000L70MQO",
-  "product_parent": 216773674,
-  "product_title": "Product 1",
-  "product_category": "Toys",
-  "star_rating": 5,
-  "helpful_votes": 1,
-  "total_votes": 4,
-  "vine": "N",
-  "verified_purchase": "Y",
-  "review_headline": "Five Stars",
-  "review_body": "Cool.",
-  "review_date": "2015-01-12T00:00:00.000-06:00"
-}
-```
+Open up `WordCountStreamingApp.scala` and configure the app so that it can read from Kafka.
 
-Open up WordCountStreamingApp.scala.
+Run the app. What does the data look like?
+
+Refactor the app to count each word, and print the top 10 counts to the console for each batch.
+
+What are some issues that you encountered with the data?
 
 # Known Issues
 
