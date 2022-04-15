@@ -20,7 +20,7 @@ object WordCountBatchApp {
 
       val sentences = spark.read.csv("src/main/resources/sentences.txt").as[String]
       sentences.printSchema
-      sentences.show(4)
+      // sentences.show(4)
 
       // TODO: implement me
 
@@ -29,7 +29,7 @@ object WordCountBatchApp {
         .groupBy("value").count()
         .sort(desc("count"))
 
-      counts.show(10)
+      counts.show(7)
 //      counts.foreach(wordCount=>println(wordCount))
 
     } catch {
