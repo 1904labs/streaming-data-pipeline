@@ -1,11 +1,13 @@
 package com.labs1904.hwe
 
+import com.labs1904.hwe.WordCountBatchApp.splitSentenceIntoWords
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.apache.kafka.common.serialization.StringSerializer
 import org.apache.log4j.Logger
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.streaming.{OutputMode, Trigger}
 import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.types.{StringType, StructType}
 
 import java.util.Properties
 
@@ -16,10 +18,14 @@ object WordCountStreamingApp {
   lazy val logger: Logger = Logger.getLogger(this.getClass)
   val jobName = "WordCountStreamingApp"
   // TODO: define the schema for parsing data from Kafka
+  // confused - when I tried to do this, it said I couldn't, basically.
+  // I must've been doing something wrong...?
+  // But also - do I even need to do this? Seems like no, not really -
+  // but then what is the benefit of it / under what circumstances would / should I do it?
 
-  val bootstrapServer : String = "CHANGEME"
-  val username: String = "CHANGEME"
-  val password: String = "CHANGEME"
+  val bootstrapServer : String = "b-2-public.hwe-kafka-cluster.l384po.c8.kafka.us-west-2.amazonaws.com:9196,b-1-public.hwe-kafka-cluster.l384po.c8.kafka.us-west-2.amazonaws.com:9196,b-3-public.hwe-kafka-cluster.l384po.c8.kafka.us-west-2.amazonaws.com:9196"
+  val username: String = "hwe"
+  val password: String = "1904labs"
   val Topic: String = "word-count"
 
   //Use this for Windows
@@ -55,22 +61,57 @@ object WordCountStreamingApp {
         .option("kafka.sasl.jaas.config", getScramAuthString(username, password))
         .load()
         .selectExpr("CAST(value AS STRING)").as[String]
+//        .withColumn("timestamp", current_timestamp())
 
       sentences.printSchema
 
-      // TODO: implement me
-      //val counts = ???
+//      // TODO: implement me
+
+      // this does a running total of counts - so eventually the word "the" is at the top
+      // since it's the most common word across all batches, over time
+//      val counts = sentences
+//        .flatMap(row => splitSentenceIntoWords(row))
+//        .groupBy("value").count()
+//        .sort(desc("count"))
+//
+//      val query = counts.writeStream
+//        .outputMode(OutputMode.Complete())
+//        .format("console")
+//        .trigger(Trigger.ProcessingTime("5 seconds"))
+//        .start()
+
+      // try foreachbatch?
+      val counts = sentences
+        .groupBy("value").count()
+        .sort(desc("count"))
 
       val query = sentences.writeStream
-        .outputMode(OutputMode.Append())
+        .foreachBatch(sentences.flatMap(row => splitSentenceIntoWords(row)))
+        .outputMode(OutputMode.Complete())
         .format("console")
         .trigger(Trigger.ProcessingTime("5 seconds"))
         .start()
+
+      // But the instructions were "print the top 10 counts to the console for each batch" -
+      // not for all batches as a running total.
+      // Figure out how to do this. I think involves timestamp, and/or Append mode, and/or splitting on just value column...?
+//      val counts = sentences("value")
+//        .flatMap(row => splitSentenceIntoWords(row)
+//        .groupBy("value").count()
+//        .sort(desc("count"))
+//
+//      val query = counts.writeStream
+//        .foreachbatch()
+//        .outputMode(OutputMode.Append())
+//        .format("console")
+//        .trigger(Trigger.ProcessingTime("5 seconds"))
+//        .start()
 
       query.awaitTermination()
     } catch {
       case e: Exception => logger.error(s"$jobName error in main", e)
     }
+
   }
 
   def getScramAuthString(username: String, password: String) = {
@@ -78,5 +119,10 @@ object WordCountStreamingApp {
    username=\"$username\"
    password=\"$password\";"""
   }
+
+  def splitSentenceIntoWords(sentence: String): Array[String] = {
+    sentence.toLowerCase.replaceAll("[^a-z ]+", "").split(" ")
+  }
+
 
 }
