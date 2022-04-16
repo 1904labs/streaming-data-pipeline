@@ -80,32 +80,24 @@ object WordCountStreamingApp {
 //        .trigger(Trigger.ProcessingTime("5 seconds"))
 //        .start()
 
-      // try foreachbatch?
-      val counts = sentences
-        .groupBy("value").count()
-        .sort(desc("count"))
 
-      val query = sentences.writeStream
-        .foreachBatch(sentences.flatMap(row => splitSentenceIntoWords(row)))
-        .outputMode(OutputMode.Complete())
+
+      val windowedCounts = sentences
+        .flatMap(row => splitSentenceIntoWords(row))
+        .withColumn("timestamp", current_timestamp())
+        .withWatermark("timestamp", "5 seconds")
+        .groupBy(
+          window($"timestamp", "5 seconds", "5 seconds"),
+          $"value")
+        .count()
+//        .limit(10)
+//        .sort(desc("count"))
+
+      val query = windowedCounts.writeStream
+        .outputMode(OutputMode.Append())
         .format("console")
         .trigger(Trigger.ProcessingTime("5 seconds"))
         .start()
-
-      // But the instructions were "print the top 10 counts to the console for each batch" -
-      // not for all batches as a running total.
-      // Figure out how to do this. I think involves timestamp, and/or Append mode, and/or splitting on just value column...?
-//      val counts = sentences("value")
-//        .flatMap(row => splitSentenceIntoWords(row)
-//        .groupBy("value").count()
-//        .sort(desc("count"))
-//
-//      val query = counts.writeStream
-//        .foreachbatch()
-//        .outputMode(OutputMode.Append())
-//        .format("console")
-//        .trigger(Trigger.ProcessingTime("5 seconds"))
-//        .start()
 
       query.awaitTermination()
     } catch {
