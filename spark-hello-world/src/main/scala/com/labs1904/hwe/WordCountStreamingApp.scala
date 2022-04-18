@@ -69,35 +69,35 @@ object WordCountStreamingApp {
 
       // this does a running total of counts - so eventually the word "the" is at the top
       // since it's the most common word across all batches, over time
-//      val counts = sentences
-//        .flatMap(row => splitSentenceIntoWords(row))
-//        .groupBy("value").count()
-//        .sort(desc("count"))
-//
-//      val query = counts.writeStream
-//        .outputMode(OutputMode.Complete())
-//        .format("console")
-//        .trigger(Trigger.ProcessingTime("5 seconds"))
-//        .start()
-
-
-
-      val windowedCounts = sentences
+      val counts = sentences
         .flatMap(row => splitSentenceIntoWords(row))
-        .withColumn("timestamp", current_timestamp())
-        .withWatermark("timestamp", "5 seconds")
-        .groupBy(
-          window($"timestamp", "5 seconds", "5 seconds"),
-          $"value")
-        .count()
-//        .limit(10)
-//        .sort(desc("count"))
+        .groupBy("value").count()
+        .sort(desc("count"))
+        .limit(10)
 
-      val query = windowedCounts.writeStream
-        .outputMode(OutputMode.Append())
+      val query = counts.writeStream
+        .outputMode(OutputMode.Complete())
         .format("console")
         .trigger(Trigger.ProcessingTime("5 seconds"))
         .start()
+
+      // This was me misunderstanding the directions - the correct code (more or less) is what I accidentally did at first, above
+//      val windowedCounts = sentences
+//        .flatMap(row => splitSentenceIntoWords(row))
+//        .withColumn("timestamp", current_timestamp())
+//        .withWatermark("timestamp", "5 seconds")
+//        .groupBy(
+//          window($"timestamp", "5 seconds", "5 seconds"),
+//          $"value")
+//        .count()
+////        .limit(10)
+////        .sort(desc("count"))
+//
+//      val query = windowedCounts.writeStream
+//        .outputMode(OutputMode.Append())
+//        .format("console")
+//        .trigger(Trigger.ProcessingTime("5 seconds"))
+//        .start()
 
       query.awaitTermination()
     } catch {
