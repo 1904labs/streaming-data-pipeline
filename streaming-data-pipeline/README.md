@@ -14,11 +14,7 @@ This project will have you
 3. Use the customer id to lookup the corresponding user data in HBase.
 4. Join the review data with the user data.
 5. Save this combined result in hdfs
-6. Setup a Hive Table that points to the enriched result stored in HDFS
-
-### Slides Accompanying the instructions
-
-[HWE 2021 Project Week](https://docs.google.com/presentation/d/1VYreCRMDD3F6a9Xn2pP13mYxUZN8TL4wZHpxSQaysz0/edit?usp=sharing "Week 6 Slides")
+   1. Setup a Hive Table that points to the enriched result stored in HDFS
 
 ### Ingest data from a "reviews" Kafka topic.
 
@@ -27,7 +23,7 @@ provided cluster. Verify the output using the console sink provided.
 
 ### Parse each message from the "reviews" topic into a Scala case class.
 
-- In the StreamingPipeline.scala file, define a [Scala case class](https://docs.google.com/presentation/d/1cdcJQFleLNBTCyjc-Ah9pdUM2cAp3NcedRinknjdUjo/edit#slide=id.gca151140f3_0_139) above the object definition. 
+- In the StreamingPipeline.scala file, define a Scala case class above the object definition. 
 - A [sample](src/main/resources/reviews.tsv) of reviews, with column names, is located within the resources directory.
 
 ```
@@ -39,12 +35,10 @@ US	44331596	R1UE3RPRGCOLD	B002LHA74O	818126353	Super Jumbo Playing Cards by S&S 
 
 ### Use the customer_id contained within the review message to lookup corresponding user data in HBase.
 
-Construct
-an [HBase get request](https://docs.google.com/presentation/d/1wPMeesO5DvceGm0BXhgaxFq6DUbtKPkg600lqHnlar0/edit#slide=id.gd2e67ee890_2_6)
-for every review message. The customer_id corresponds to a HBase rowkey.
+Construct a HBase get request for every review message. The customer_id corresponds to a HBase rowkey.
 
 **Tip**:
-[Open up a connection per partition, instead of per row](https://docs.google.com/presentation/d/1VYreCRMDD3F6a9Xn2pP13mYxUZN8TL4wZHpxSQaysz0/edit#slide=id.gcd61ac9710_0_10)
+Open up a connection per partition, instead of per row
 
 ### Join the review data with the user data into a Scala case class.
 
@@ -54,11 +48,20 @@ data by running the application and outputting via the console sink.
 ### Save this combined result in hdfs.
 
 Adjust the write stream configuration to write to hdfs rather than outputting to the console.
-[Example and config options ](https://docs.google.com/presentation/d/1VYreCRMDD3F6a9Xn2pP13mYxUZN8TL4wZHpxSQaysz0/edit#slide=id.gcd61ac9710_0_31)
+
+```
+val query = result.writeStream
+  .outputMode(OutputMode.Append())
+  .format("json")
+  .option("path", s"/user/${hdfsUsername}/reviews_json")
+  .option("checkpointLocation", s"/user/${hdfsUsername}/reviews_checkpoint")
+  .trigger(Trigger.ProcessingTime("5 seconds"))
+  .start()
+```
 
 ### Setup a Hive table that points to the enriched result stored in hdfs.
 
-- [Create an external table](https://docs.google.com/presentation/d/1vstFy3dXS0tV88yYntIsvfVg8J0mvdCe9DJ3yIRb4c4/edit#slide=id.g829663288b_0_318)
+- Create an external table
 - Write and run a query to verify that the data is successfully stored ( e.g. select all usernames who gave reviews a
   rating of 4 or greater )
 

@@ -20,9 +20,9 @@ object StreamingPipeline {
   val hdfsUsername = "CHANGEME" // TODO: set this to your handle
 
   //Use this for Windows
-  //val trustStore: String = "src\\main\\resources\\kafka.client.truststore.jks"
+  val trustStore: String = "src\\main\\resources\\kafka.client.truststore.jks"
   //Use this for Mac
-  val trustStore: String = "src/main/resources/kafka.client.truststore.jks"
+  //val trustStore: String = "src/main/resources/kafka.client.truststore.jks"
 
   def main(args: Array[String]): Unit = {
     try {
