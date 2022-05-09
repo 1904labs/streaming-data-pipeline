@@ -17,5 +17,5 @@ There are multiple projects inside this repository:
  1. [Scala practice project](./scala-hello-world) -- start here
  2. [Kafka practice project](./kafka-hello-world)
  3. [HBase practice project](./hbase-hello-world)
- 4. Spark practice project
+ 4. [Spark practice project](./spark-hello-world)
  5. [Streaming data pipeline final project](./streaming-data-pipeline)
