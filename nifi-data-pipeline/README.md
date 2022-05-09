@@ -46,7 +46,7 @@ Write the file to HDFS.
 From the command line check the files written to HDFS.
 
 ```bash
-hdfs dfs -la /data/raw/
+hdfs dfs -ls /data/raw/
 hdfs dfs -copyToLocal /data/raw/b46106fe-96df-41e1-a183-14ec27d99b28.snappy.parquet .
 parquet-tools schema b46106fe-96df-41e1-a183-14ec27d99b28.snappy.parquet
 parquet-tools head b46106fe-96df-41e1-a183-14ec27d99b28.snappy.parquet
