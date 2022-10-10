@@ -44,8 +44,7 @@ object ChallengeProblems {
    */
 
   def sumInts(n: Int): Int = {
-    val twentyFive = 25;
-    n + twentyFive
+    n + 25
   }
 
 

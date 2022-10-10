@@ -1,5 +1,7 @@
 package com.labs1904.hwe.exercises
 
+import scala.collection.mutable.ListBuffer
+
 object StretchProblems {
 
   /*
@@ -14,12 +16,18 @@ For a given number, return the next largest number that can be created by rearra
 If no larger number can be created, return -1
  */
   def getNextBiggestNumber(i: Integer): Int = {
-    val s = i.toString.split("");
-    val finalIndex = s.length - 1;
-    val nextFinalIndex = s.length - 2;
+    val iAsList = i.toString.map(_.asDigit).toList;
+    val length = iAsList.length;
 
-    for (Int: j = 0; j <= s.length; j++)
+    def negativeOneChecker(list: List[Int]): Int = {
+      if (list.head >= list(1)){
+
+      }
+    }
 
   }
+
+
+
 
 }
