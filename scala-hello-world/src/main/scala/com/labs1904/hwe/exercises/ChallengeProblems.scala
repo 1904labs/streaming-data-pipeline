@@ -120,7 +120,7 @@ object ChallengeProblems {
  */
   def minimumOption(listOfOptionalInts: List[Option[Int]]): Option[Int] = {
     val minInt: Option[Int] = if (listOfOptionalInts.isEmpty) None else listOfOptionalInts.min
-  minInt
+    minInt
   }
 
 
