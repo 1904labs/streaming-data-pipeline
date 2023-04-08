@@ -6,6 +6,7 @@ import java.util.{Arrays, Properties, UUID}
 import net.liftweb.json.DefaultFormats
 import org.apache.kafka.clients.consumer.{ConsumerConfig, ConsumerRecord, ConsumerRecords, KafkaConsumer}
 import org.apache.kafka.common.serialization.StringDeserializer
+import com.labs1904.hwe.util.Constants._
 
 object KafkaHomework {
   /**
@@ -14,7 +15,6 @@ object KafkaHomework {
    */
 
     //TODO: If these are given in class, change them so that you can run a test. If not, don't worry about this step
-  val BootstrapServer = "change-me"
   val Topic: String = "change-me"
 
   implicit val formats: DefaultFormats.type = DefaultFormats
@@ -23,7 +23,7 @@ object KafkaHomework {
 
     // Create the KafkaConsumer
     //TODO: Write in a comment what these lines are doing. What are the properties necessary to instantiate a consumer?
-    val properties = getProperties(BootstrapServer)
+    val properties = getProperties(BOOTSTRAP_SERVER)
     val consumer: KafkaConsumer[String, String] = new KafkaConsumer[String, String](properties)
 
 
