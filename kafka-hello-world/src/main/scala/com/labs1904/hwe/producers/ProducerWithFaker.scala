@@ -5,10 +5,13 @@ import com.labs1904.hwe.util.Util
 import faker._
 import net.liftweb.json.DefaultFormats
 import org.apache.kafka.clients.producer.{Callback, KafkaProducer, ProducerRecord, RecordMetadata}
+import org.slf4j.LoggerFactory
 
 case class User(name: String, username: String, email: String)
 
 object ProducerWithFaker {
+  private val logger = LoggerFactory.getLogger(getClass)
+
   implicit val formats: DefaultFormats.type = DefaultFormats
 
   def main(args: Array[String]): Unit = {
@@ -40,7 +43,7 @@ object ProducerWithFaker {
       producer.send(record, new Callback() {
         override def onCompletion(recordMetadata: RecordMetadata, e: Exception): Unit = {
           if (e == null) {
-            println(
+            logger.info(
               s"""
                  |Sent Record: ${record.value()}
                  |Topic: ${recordMetadata.topic()}
@@ -48,7 +51,7 @@ object ProducerWithFaker {
                  |Offset: ${recordMetadata.offset()}
                  |Timestamp: ${recordMetadata.timestamp()}
           """.stripMargin)
-          } else println("Error while producing", e)
+          } else logger.info("Error while producing", e)
         }
       })
     })

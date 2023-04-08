@@ -7,7 +7,9 @@ object Constants {
   val USERNAME: String = "CHANGEME"
   val PASSWORD: String = "CHANGEME"
   //Use this for Windows
-  val TRUST_STORE: String = "src\\main\\resources\\kafka.client.truststore.jks"
-  //Use this for Mac
-  //val TRUST_STORE: String = "src/main/resources/kafka.client.truststore.jks"
+  val TRUST_STORE: String = {
+    val url = getClass.getResource("/kafka.client.truststore.jks")
+    if (url == null) throw new Exception("Unable to find kafka.client.truststore.jks in resources, is the project opened correctly?")
+    else url.getPath
+  }
 }

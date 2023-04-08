@@ -5,11 +5,13 @@ import com.labs1904.hwe.util.Util
 import net.liftweb.json.DefaultFormats
 import org.apache.kafka.clients.consumer.{ConsumerRecord, ConsumerRecords, KafkaConsumer}
 import org.apache.kafka.clients.producer.KafkaProducer
+import org.slf4j.LoggerFactory
 
 import java.time.Duration
 import java.util.Arrays
 
 object HweConsumer {
+  private val logger = LoggerFactory.getLogger(getClass)
 
   val consumerTopic: String = "question-1"
   val producerTopic: String = "question-1-output"
@@ -39,7 +41,7 @@ object HweConsumer {
       records.forEach((record: ConsumerRecord[String, String]) => {
         // Retrieve the message from each record
         val message = record.value()
-        println(s"Message Received: $message")
+        logger.info(s"Message Received: $message")
         // TODO: Add business logic here!
 
       })

@@ -2,13 +2,15 @@ package com.labs1904.hwe.homework
 
 import java.time.Duration
 import java.util.{Arrays, Properties, UUID}
-
 import net.liftweb.json.DefaultFormats
 import org.apache.kafka.clients.consumer.{ConsumerConfig, ConsumerRecord, ConsumerRecords, KafkaConsumer}
 import org.apache.kafka.common.serialization.StringDeserializer
 import com.labs1904.hwe.util.Constants._
+import org.slf4j.LoggerFactory
 
 object KafkaHomework {
+  private val logger = LoggerFactory.getLogger(getClass)
+
   /**
    * Your task is to try to understand this code and run the consumer successfully. Follow each step below for completion.
    * Implement all the todos below
@@ -43,7 +45,7 @@ object KafkaHomework {
         val message = record.value()
 
         //TODO: If you were given the values for the bootstrap servers in class, run the app with the green play button and make sure it runs successfully. You should see message(s) printing out to the screen
-        println(s"Message Received: $message")
+        logger.info(s"Message Received: $message")
       })
     }
   }

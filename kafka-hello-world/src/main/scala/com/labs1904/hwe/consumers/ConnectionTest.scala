@@ -4,12 +4,14 @@ import com.labs1904.hwe.util.Constants._
 import com.labs1904.hwe.util.Util
 import net.liftweb.json.DefaultFormats
 import org.apache.kafka.clients.consumer.{ConsumerRecord, ConsumerRecords, KafkaConsumer}
+import org.slf4j.LoggerFactory
 
 import java.time.Duration
 import java.util.Arrays
 
 object ConnectionTest {
   implicit val formats: DefaultFormats.type = DefaultFormats
+  private val logger = LoggerFactory.getLogger(getClass)
 
   def main(args: Array[String]): Unit = {
     // Create the KafkaConsumer
@@ -29,7 +31,7 @@ object ConnectionTest {
       records.forEach((record: ConsumerRecord[String, String]) => {
         // Retrieve the message from each record
         val message = record.value()
-        println(s"Message Received: $message")
+        logger.info(s"Message Received: $message")
       })
     }
   }

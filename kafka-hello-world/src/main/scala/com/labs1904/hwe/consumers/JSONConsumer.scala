@@ -4,11 +4,14 @@ import com.labs1904.hwe.util.Constants._
 import com.labs1904.hwe.util.Util
 import net.liftweb.json.DefaultFormats
 import org.apache.kafka.clients.consumer.{ConsumerRecord, ConsumerRecords, KafkaConsumer}
+import org.slf4j.LoggerFactory
 
 import java.time.Duration
 import java.util
 
 object JSONConsumer {
+  private val logger = LoggerFactory.getLogger(getClass)
+
   implicit val formats: DefaultFormats.type = DefaultFormats
 
   def main(args: Array[String]): Unit = {
@@ -29,8 +32,8 @@ object JSONConsumer {
       records.forEach((record: ConsumerRecord[String, String]) => {
         /*
           // DEBUG Info
-          println(s"Key: ${record.key}. Value: ${record.value}")
-          println(s"Partition: ${record.partition}, Offset ${record.offset}")
+          logger.info(s"Key: ${record.key}. Value: ${record.value}")
+          logger.info(s"Partition: ${record.partition}, Offset ${record.offset}")
         */
 
         /*
@@ -40,7 +43,7 @@ object JSONConsumer {
          */
 
         val message = record.value()
-        println(s"Message Received: $message")
+        logger.info(s"Message Received: $message")
       })
     }
   }
