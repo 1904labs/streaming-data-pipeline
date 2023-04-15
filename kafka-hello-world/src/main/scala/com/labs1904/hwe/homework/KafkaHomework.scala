@@ -5,7 +5,7 @@ import java.util.{Arrays, Properties, UUID}
 import net.liftweb.json.DefaultFormats
 import org.apache.kafka.clients.consumer.{ConsumerConfig, ConsumerRecord, ConsumerRecords, KafkaConsumer}
 import org.apache.kafka.common.serialization.StringDeserializer
-import com.labs1904.hwe.util.Constants._
+import com.labs1904.hwe.util.Connection._
 import org.slf4j.LoggerFactory
 
 object KafkaHomework {
