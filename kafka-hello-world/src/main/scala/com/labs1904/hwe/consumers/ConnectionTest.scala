@@ -25,7 +25,7 @@ object ConnectionTest {
       true
     }) {
       // poll for new data
-      val duration: Duration = Duration.ofSeconds(5)
+      val duration: Duration = Duration.ofMillis(100)
       val records: ConsumerRecords[String, String] = consumer.poll(duration)
 
       records.forEach((record: ConsumerRecord[String, String]) => {

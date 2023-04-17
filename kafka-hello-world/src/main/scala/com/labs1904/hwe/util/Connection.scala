@@ -2,6 +2,20 @@ package com.labs1904.hwe.util
 
 import java.nio.file.Paths
 
+
+/*
+The connection class requires creating 4 environment variables before running the app and possibly before starting IntelliJ (see further explanation below).  Please fill the following 4 environment variables with values provided by the HWE admins:
+
+- HWE_KAFKA_BOOTSTRAP_SERVER
+- HWE_KAFKA_DEFAULT_TOPIC
+- HWE_KAFKA_PASSWORD
+- HWE_KAFKA_USERNAME
+
+If the environment variables are not present, an exception will be thrown informing developers
+what environment variable is missing.
+
+Note that some environments like Windows need to have IntelliJ restarted before the environment variables will be present in the environment (I haven't tested Linux and Mac).
+ */
 object Connection {
 
   /*
