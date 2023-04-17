@@ -1,6 +1,6 @@
 package com.labs1904.hwe.producers
 
-import com.labs1904.hwe.util.Constants._
+import com.labs1904.hwe.util.Connection._
 import com.labs1904.hwe.util.Util
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
 

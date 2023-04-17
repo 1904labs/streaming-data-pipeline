@@ -1,6 +1,6 @@
 package com.labs1904.hwe.util
 
-import com.labs1904.hwe.util.Constants.{PASSWORD, TRUST_STORE, USERNAME}
+import com.labs1904.hwe.util.Connection.{PASSWORD, TRUST_STORE, USERNAME}
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.apache.kafka.common.serialization.{StringDeserializer, StringSerializer}
@@ -18,8 +18,8 @@ object Util {
 
     properties.put("security.protocol", "SASL_SSL")
     properties.put("sasl.mechanism", "SCRAM-SHA-512")
-    properties.put("ssl.truststore.location", Constants.TRUST_STORE)
-    properties.put("sasl.jaas.config", getScramAuthString(Constants.USERNAME, Constants.PASSWORD))
+    properties.put("ssl.truststore.location", Connection.TRUST_STORE)
+    properties.put("sasl.jaas.config", getScramAuthString(Connection.USERNAME, Connection.PASSWORD))
 
     properties
   }
