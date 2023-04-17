@@ -1,6 +1,6 @@
 package com.labs1904.hwe.consumers
 
-import com.labs1904.hwe.util.Connection._
+import com.labs1904.hwe.util.Constants._
 import com.labs1904.hwe.util.Util
 import net.liftweb.json.DefaultFormats
 import org.apache.kafka.clients.consumer.{ConsumerRecord, ConsumerRecords, KafkaConsumer}
@@ -25,7 +25,7 @@ object ConnectionTest {
       true
     }) {
       // poll for new data
-      val duration: Duration = Duration.ofSeconds(5)
+      val duration: Duration = Duration.ofMillis(100)
       val records: ConsumerRecords[String, String] = consumer.poll(duration)
 
       records.forEach((record: ConsumerRecord[String, String]) => {

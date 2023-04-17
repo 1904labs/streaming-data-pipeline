@@ -1,6 +1,6 @@
 package com.labs1904.hwe.consumers
 
-import com.labs1904.hwe.util.Connection._
+import com.labs1904.hwe.util.Constants._
 import com.labs1904.hwe.util.Util
 import net.liftweb.json.DefaultFormats
 import org.apache.kafka.clients.consumer.{ConsumerRecord, ConsumerRecords, KafkaConsumer}
