@@ -1,5 +1,7 @@
 package com.labs1904.hwe.homework
 
+import com.labs1904.hwe.consumers.HweConsumer.consumerTopic
+
 import java.time.Duration
 import java.util.{Arrays, Properties, UUID}
 import net.liftweb.json.DefaultFormats
@@ -17,7 +19,7 @@ object KafkaHomework {
    */
 
     //TODO: If these are given in class, change them so that you can run a test. If not, don't worry about this step
-  val Topic: String = "change-me"
+  val Topic: String = consumerTopic
 
   implicit val formats: DefaultFormats.type = DefaultFormats
 
@@ -34,7 +36,7 @@ object KafkaHomework {
 
     while (true) {
       // TODO: Change this to be every 5 seconds
-      val duration: Duration = Duration.ofMillis(100)
+      val duration: Duration = Duration.ofMillis(5000)
 
       //TODO: Look up the ConsumerRecords class below, in your own words what is the class designed to do?
       val records: ConsumerRecords[String, String] = consumer.poll(duration)
