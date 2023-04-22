@@ -1,11 +1,10 @@
 package com.labs1904.hwe.consumers
 
-import com.labs1904.hwe.consumers
 import com.labs1904.hwe.util.Constants._
 import com.labs1904.hwe.util.Util
 import net.liftweb.json.DefaultFormats
 import org.apache.kafka.clients.consumer.{ConsumerRecord, ConsumerRecords, KafkaConsumer}
-import org.apache.kafka.clients.producer.KafkaProducer
+import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
 import org.slf4j.LoggerFactory
 
 import java.time.Duration
@@ -33,6 +32,7 @@ object HweConsumer {
     val producerProperties = Util.getProperties(BOOTSTRAP_SERVER)
     val producer = new KafkaProducer[String, String](producerProperties)
 
+
     // Subscribe to the topic
     consumer.subscribe(Arrays.asList(consumerTopic))
 
@@ -48,12 +48,19 @@ object HweConsumer {
         val message = record.value()
 //        logger.info(s"Message Received: $message")
         // TODO: Add business logic here!
-        val messageSplit = message.split("\\t")
+        val regex: String = "\\t"
+        val messageSplit = message.split(regex)
         val rawUser = RawUser(messageSplit(0),messageSplit(1),messageSplit(2),messageSplit(3), messageSplit(4))
         val rawUserSplit = rawUser.toString.split(",")
         val enrichedUser = EnrichedUser(rawUserSplit(0), rawUserSplit(1), rawUserSplit(2), rawUserSplit(3), messageSplit(4), "Michael Allen")
         val enrichedUserAsString = enrichedUser.toString
         logger.info(s"Message Received: $enrichedUserAsString")
+
+        //Produce received and enriched message
+        val messageToSend = enrichedUserAsString
+        val producerRecord = new ProducerRecord[String, String](producerTopic, messageToSend)
+        producer.send(producerRecord)
+        producer.close()
       })
     }
   }
