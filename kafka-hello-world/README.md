@@ -23,7 +23,7 @@ Run the class and make sure you have an output that says Message Received: <some
 
 #### Consume from "question-1" and print to console
 
-A topic exists called "question-1" with CSV strings as its messages. Using `SimpleConsumer`:
+A topic exists called "question-1" with tab delimited strings as its messages. Navigate to HweConsumer and write code to:
 
 - Consume from the topic
 - Print out the strings to understand their structure.
@@ -32,7 +32,7 @@ A topic exists called "question-1" with CSV strings as its messages. Using `Simp
 
 Modify your solution to the problem above by adding the following functionality:
 - Create a case class named `RawUser` that matches the data's structure.
-- Split the CSV string on commas, and populate an instance of the scala case class that you created.
+- Split the TSV by tabs /t, and populate an instance of the scala case class that you created.
 
 #### Consume from "question-1", populate a case class, and enrich the data from a map
 
@@ -53,7 +53,7 @@ Modify your solution to the problem above by adding the following functionality:
 
 #### When I run the ConnectionTest, my program just hangs!
 
-There is likely a problem with your IP address - fill out the [What's Your IP?](https://docs.google.com/forms/d/e/1FAIpQLSde9gi2LQXk3-OAgqtyMOB2j0bkcYFMFV27MseqWXEd_ja6rA/viewform) form again
+There is likely a problem with your IP address - fill out the What's Your IP form again
  and ask a TA to re-approve you.
 
 #### When I run the ConnectionTest, it complains "Failed to construct the kafka consumer!: Failed to load SSL keystore"
