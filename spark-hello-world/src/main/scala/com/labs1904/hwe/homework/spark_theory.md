@@ -24,16 +24,18 @@ reword confusing descriptions in a way that makes sense to you.
 
 #### What is Apache Spark?
 * Helpful resource: [Spark Overview](https://www.youtube.com/watch?v=ymtq8yjmD9I) 
+* Answer:  large scale, distributed data management
 
 #### What is distributed data processing? How does it relate to Apache Spark?  
 [Apache Spark for Beginners](https://medium.com/@aristo_alex/apache-spark-for-beginners-d3b3791e259e)
+* distributed data processing is a large ecosystem with spark just being one of many
 
 #### On the physical side of a spark cluster, you have a driver and executors. Define each and give an example of how they work together to process data
 
 #### Define each and explain how they are different from each other 
-* RDD (Resilient Distributed Dataset)
-* DataFrame
-* DataSet
+* RDD (Resilient Distributed Dataset) -- lowest level API for spark; might need to use if data doesn't have a schema
+* DataFrame -- stronger typed RDD; dataframe offers higher level abstraction = more processing power
+* DataSet -- newer better version of dataframe; stronger type checking
 
 #### What is a spark transformation?
 [Spark By Examples-Transformations](https://sparkbyexamples.com/apache-spark-rdd/spark-rdd-transformations/)
@@ -42,5 +44,6 @@ reword confusing descriptions in a way that makes sense to you.
 
 #### What is a partition in spark? Why would you ever need to repartition? 
 [Spark Partitioning](https://sparkbyexamples.com/spark/spark-repartition-vs-coalesce/)
+*Answer:  once chunk of a data set
 
 #### What was the most fascinating aspect of Spark to you while learning? 

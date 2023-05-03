@@ -17,9 +17,9 @@ object WordCountStreamingApp {
   val jobName = "WordCountStreamingApp"
   // TODO: define the schema for parsing data from Kafka
 
-  val bootstrapServer : String = "CHANGEME"
-  val username: String = "CHANGEME"
-  val password: String = "CHANGEME"
+  val bootstrapServer : String = "b-3-public.hwekafkacluster.6d7yau.c16.kafka.us-east-1.amazonaws.com:9196,b-2-public.hwekafkacluster.6d7yau.c16.kafka.us-east-1.amazonaws.com:9196,b-1-public.hwekafkacluster.6d7yau.c16.kafka.us-east-1.amazonaws.com:9196"
+  val username: String = "1904labs"
+  val password: String = "1904labs"
   val Topic: String = "word-count"
 
   //Use this for Windows
@@ -59,10 +59,12 @@ object WordCountStreamingApp {
       sentences.printSchema
 
       // TODO: implement me
-      //val counts = ???
+      val counts = sentences.flatMap(sentences => splitSentenceIntoWords(sentences)).groupBy(col("value")).count()
 
-      val query = sentences.writeStream
-        .outputMode(OutputMode.Append())
+      counts.printSchema
+
+      val query = counts.writeStream
+        .outputMode(OutputMode.Update())
         .format("console")
         .trigger(Trigger.ProcessingTime("5 seconds"))
         .start()
@@ -71,6 +73,12 @@ object WordCountStreamingApp {
     } catch {
       case e: Exception => logger.error(s"$jobName error in main", e)
     }
+  }
+
+  def splitSentenceIntoWords(sentence: String): Array[String] = {
+    val arrOfWords = sentence.split("\\W+")
+    val wordsToLowerCase = arrOfWords.map(word => word.toLowerCase)
+    wordsToLowerCase
   }
 
   def getScramAuthString(username: String, password: String) = {

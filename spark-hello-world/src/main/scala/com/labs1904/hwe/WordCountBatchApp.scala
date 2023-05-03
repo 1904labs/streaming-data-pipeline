@@ -1,8 +1,9 @@
 package com.labs1904.hwe
 
 import org.apache.log4j.Logger
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{Dataset, SparkSession}
 import org.apache.spark.sql.functions._
+import org.apache.spark.sql.types.{StringType, StructType}
 
 object WordCountBatchApp {
   lazy val logger: Logger = Logger.getLogger(this.getClass)
@@ -18,12 +19,15 @@ object WordCountBatchApp {
         .getOrCreate()
       import spark.implicits._
 
-      val sentences = spark.read.csv("src/main/resources/sentences.txt").as[String]
-      sentences.printSchema
+      val schema = new StructType().add("sentences", StringType, nullable=true)
+      val sentences = spark.read.schema(schema).csv("src/main/resources/sentences.txt").as[String]
+      sentences.printSchema()
+      sentences.show()
 
       // TODO: implement me
-
-      //val counts = ???
+      val words = sentences.flatMap(sentence => splitSentenceIntoWordStrings(sentence)).groupBy(col("value")).count()
+      words.printSchema()
+      words.show(50)
 
       //counts.foreach(wordCount=>println(wordCount))
     } catch {
@@ -33,6 +37,10 @@ object WordCountBatchApp {
 
   // TODO: implement this function
   // HINT: you may have done this before in Scala practice...
-  def splitSentenceIntoWords(sentence: String): Array[String] = ???
+  def splitSentenceIntoWordStrings(sentence: String): Array[String] = {
+    val arrayOfStr: Array[String] = sentence.split("\\W+" )
+    val strToLowerCase: Array[String] = arrayOfStr.map(word => word.toLowerCase())
+    strToLowerCase
+  }
 
 }
