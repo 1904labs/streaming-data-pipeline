@@ -17,7 +17,7 @@ object WordCountStreamingApp {
   val jobName = "WordCountStreamingApp"
   // TODO: define the schema for parsing data from Kafka
 
-  val bootstrapServer : String = "b-3-public.hwekafkacluster.6d7yau.c16.kafka.us-east-1.amazonaws.com:9196,b-2-public.hwekafkacluster.6d7yau.c16.kafka.us-east-1.amazonaws.com:9196,b-1-public.hwekafkacluster.6d7yau.c16.kafka.us-east-1.amazonaws.com:9196"
+  val bootstrapServer : String = "Change me"
   val username: String = "1904labs"
   val password: String = "1904labs"
   val Topic: String = "word-count"

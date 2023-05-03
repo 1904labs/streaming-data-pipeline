@@ -3,10 +3,7 @@ package com.labs1904.hwe
 import org.apache.hadoop.hbase.{HBaseConfiguration, TableName}
 import org.apache.hadoop.hbase.client.{Connection, ConnectionFactory, Get, Result, ResultScanner, Scan}
 import org.apache.hadoop.hbase.util.Bytes
-import org.apache.hbase.thirdparty.io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue.Consumer
 import org.apache.logging.log4j.{LogManager, Logger}
-
-import scala.collection.JavaConverters._
 
 object MyApp {
   lazy val logger: Logger = LogManager.getLogger(this.getClass)
@@ -24,11 +21,13 @@ object MyApp {
       val scanner = table.getScanner(scan)
       val get = new Get(Bytes.toBytes("10000001"))
       val result = table.get(get)
-//      logger.debug(scanner.forEach(_=>{
-//       val count = 0
-//        _.if(Some){}))
-//      }
+      val birthdate =
+        Bytes.toString(
+          result.getValue(Bytes.toBytes("f1": String), Bytes.toBytes("birthdate": String))
+        )
+
       logger.debug(result)
+      logger.debug(birthdate)
     } catch {
       case e: Exception => logger.error("Error in main", e)
     } finally {
