@@ -1,12 +1,13 @@
 package com.labs1904.hwe.util
 
 /*
-The connection class requires creating 1 environment variable before running the app and possibly before starting IntelliJ (see further explanation below).  Please fill the following environment variable with values provided by the HWE admins:
+The connection class requires creating 1 environment variable before running the app and possibly before starting IntelliJ (see further explanation below).  Please fill the following environment variables with values provided by the HWE admins:
 
 - HWE_HBASE_ZOOKEEPER_QUORUM
+- HWE_HBASE_TABLE
 
-If the environment variable is not present, an exception will be thrown informing developers
-what environment variable is missing.
+If the environment variables are not present, an exception will be thrown informing developers
+what environment variable(s) are missing.
 
 Note that some environments like Windows need to have IntelliJ restarted before the environment variables will be present in the environment (I haven't tested Linux and Mac).
  */
