@@ -37,21 +37,41 @@ object Connection {
        envVar.get
   }
 
+  /** Connection string to the Kafka bootstrap server.
+   *
+   * @throws IllegalStateException if the environment variable is not found.
+   */
+  @throws(classOf[IllegalStateException])
   val BOOTSTRAP_SERVER: String = {
     val BOOTSTRAP_SERVER_NAME = "BOOTSTRAP_SERVER";
     getConnectionValue(CONXN_VALNAME_PREFIX + BOOTSTRAP_SERVER_NAME)
   }
 
+  /** The default Kafka topic.
+   *
+   * @throws IllegalStateException if the environment variable is not found.
+   */
+  @throws(classOf[IllegalStateException])
   val DEFAULT_TOPIC: String = {
     val DEFAULT_TOPIC_NAME = "DEFAULT_TOPIC";
     getConnectionValue(CONXN_VALNAME_PREFIX + DEFAULT_TOPIC_NAME)
   }
 
+  /** The Kafka connection username.
+   *
+   * @throws IllegalStateException if the environment variable is not found.
+   */
+  @throws(classOf[IllegalStateException])
   val USERNAME: String = {
     val USERNAME_NAME = "USERNAME";
     getConnectionValue(CONXN_VALNAME_PREFIX + USERNAME_NAME)
   }
 
+  /** The Kafka connection password.
+   *
+   * @throws IllegalStateException if the environment variable is not found.
+   */
+  @throws(classOf[IllegalStateException])
   val PASSWORD: String = {
     val PASSWORD_NAME = "PASSWORD";
     getConnectionValue(CONXN_VALNAME_PREFIX + PASSWORD_NAME)
