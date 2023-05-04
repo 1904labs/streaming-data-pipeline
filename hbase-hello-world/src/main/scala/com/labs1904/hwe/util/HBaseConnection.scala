@@ -26,10 +26,23 @@ object HBaseConnection {
     envVar.get
   }
 
+  /** Connection string to the HBase database.
+   * This is provided by the HWE admins.
+   *
+   * @throws IllegalStateException if the environment variable is not found
+   */
+  @throws(classOf[IllegalStateException])
   val HBASE_ZOOKEEPER_QUORUM: String = {
     getConnectionValue("HWE_HBASE_ZOOKEEPER_QUORUM")
   }
 
+  /** Your specific HBase table used in lab.  Value should be:
+   * `<first letter of first name><last name>:users`.
+   * For example, Kit's table will be `kmenke:users`.
+   *
+   * @throws IllegalStateException if the environment variable is not found
+   */
+  @throws(classOf[IllegalStateException])
   val HBASE_TABLE: String = {
     getConnectionValue("HWE_HBASE_TABLE")
   }
