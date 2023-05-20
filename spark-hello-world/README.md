@@ -169,13 +169,25 @@ java.io.IOException: Could not locate executable null\bin\winutils.exe in the Ha
 	at com.kitmenke.spark.MyApp.main(MyApp.scala)
 ```
 
-This error is mostly harmless although annoying. To fix it, you'll need to download Hadoop binaries for windows. Luckily, there is a repo with these already.
+This error is mostly harmless although annoying. To fix it, you'll need to download Hadoop binaries for windows and there are two ways to accomplish this goal.
+
+### WinUtils - self download
+
+Luckily, there is a repo with these already.
 
 ```
 git clone https://github.com/steveloughran/winutils
 ```
 
 Then, in your IntelliJ run configuration, add an environment variable named `HADOOP_HOME` with the value as the path to wherever you cloned winutils, for example: `C:\Users\USERNAME\Code\winutils\hadoop-2.7.1`
+
+### WinUtils - script download
+
+The same environment changes can be accomplished above with the script found at `[this repo root]\spark-hello-world\Configure-Hadoop.ps1`.
+
+1. Open a command prompt as an administrator here: `[this repo root]\spark-hello-world\`
+2. Execute the following from the command prompt: `powershell.exe -ExecutionPolicy Bypass -File Configure-Hadoop.ps1`
+3. Restart IntelliJ 
 
 # Other Stuff
 

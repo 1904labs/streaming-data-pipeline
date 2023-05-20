@@ -121,3 +121,6 @@ Temporary Items
 .apdisk
 
 # End of https://www.toptal.com/developers/gitignore/api/macos
+
+# If executing spark-hello-world/Configure-Hadoop.ps1 on Windows, dont want to commit 'winutils' to source
+spark-hello-world/winutils/
