@@ -1,6 +1,6 @@
 package com.labs1904.hwe.producers
 
-import com.labs1904.hwe.util.Constants._
+import com.labs1904.hwe.util.Connection._
 import com.labs1904.hwe.util.Util
 import faker._
 import net.liftweb.json.DefaultFormats
